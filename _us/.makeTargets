@@ -1,0 +1,118 @@
+#####################################################
+#          List of .h files
+#####################################################
+HEADERS= \
+	AIR.h \
+	AIR_D.h \
+	AirlineTicketingFee.h \
+	AirlineTicketingFee_D.h \
+	IUR.h \
+	IUR_D.h \
+	InterfaceRecord.h \
+	InterfaceRecord_D.h \
+	MIR.h \
+	MIR_D.h \
+	MirSvcFee.h \
+	TAIR.h \
+	TAIR16.h \
+	TAIR_D.h \
+	TRMIUR.h \
+	TRMIUR_D.h \
+	TRMMIR.h \
+	TRMMIR_D.h \
+	TRMTAIR.h \
+	TRMTAIR16.h \
+	TRMTAIR_D.h \
+	TRMTSS.h \
+	TRMTSS_D.h \
+	TSS.h \
+	TSS_D.h \
+	dbGirrawdetail.h \
+	dbIR.h \
+	pnrstlcommon.h \
+	tbGirrawdetail.h \
+	tbIR.h
+
+#####################################################
+#          List of .h files to be installed
+#####################################################
+IHEADERS= \
+	${H_P_INC}/AIR.h \
+	${H_P_INC}/AirlineTicketingFee.h \
+	${H_P_INC}/IUR.h \
+	${H_P_INC}/InterfaceRecord.h \
+	${H_P_INC}/MIR.h \
+	${H_P_INC}/MirSvcFee.h \
+	${H_P_INC}/TAIR.h \
+	${H_P_INC}/TAIR16.h \
+	${H_P_INC}/TRMIUR.h \
+	${H_P_INC}/TRMMIR.h \
+	${H_P_INC}/TRMTAIR.h \
+	${H_P_INC}/TRMTAIR16.h \
+	${H_P_INC}/TRMTSS.h \
+	${H_P_INC}/TSS.h \
+	${H_P_INC}/dbGirrawdetail.h \
+	${H_P_INC}/dbIR.h \
+	${H_P_INC}/pnrstlcommon.h \
+	${H_P_INC}/tbGirrawdetail.h \
+	${H_P_INC}/tbIR.h
+
+#####################################################
+#          List of source files
+#####################################################
+SOURCES= \
+	tbIR.c \
+	tbGirrawdetail.pc \
+	tbIR.pc \
+	AirlineTicketingFee.cpp \
+	IUR.cpp \
+	InterfaceRecord.cpp \
+	MIR.cpp \
+	MirSvcFee.cpp \
+	TAIR.cpp \
+	TAIR16.cpp \
+	TRMIUR.cpp \
+	TRMMIR.cpp \
+	TRMTAIR.cpp \
+	TRMTAIR16.cpp \
+	TRMTSS.cpp \
+	TSS.cpp \
+	dbGirrawdetail.cpp \
+	AIR.cpp \
+	dbIR.cpp
+
+#####################################################
+#          List of .o files linked to common targets
+#####################################################
+OBJS= \
+	${TARGETS}(tbIR.o) \
+	${TARGETS}(tbGirrawdetail.o) \
+	${TARGETS}(tbIR.o) \
+	${TARGETS}(AirlineTicketingFee.o) \
+	${TARGETS}(IUR.o) \
+	${TARGETS}(InterfaceRecord.o) \
+	${TARGETS}(MIR.o) \
+	${TARGETS}(MirSvcFee.o) \
+	${TARGETS}(TAIR.o) \
+	${TARGETS}(TAIR16.o) \
+	${TARGETS}(TRMIUR.o) \
+	${TARGETS}(TRMMIR.o) \
+	${TARGETS}(TRMTAIR.o) \
+	${TARGETS}(TRMTAIR16.o) \
+	${TARGETS}(TRMTSS.o) \
+	${TARGETS}(TSS.o) \
+	${TARGETS}(dbGirrawdetail.o) \
+	${TARGETS}(AIR.o) \
+	${TARGETS}(dbIR.o)
+
+#####################################################
+#          List of targets
+#####################################################
+TARGETS= \
+	libIR_us.a
+
+#####################################################
+#          List of targets to be installed
+#####################################################
+ITARGETS= \
+	${H_P_LIB}/libIR_us.a
