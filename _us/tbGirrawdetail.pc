@@ -1,0 +1,157 @@
+/*===================pc_source===============================START GLOBAL BANNER
+(c) Copyright GLOBAL Travel Computer Services 1994, 1995, 1996, 1997, 1998, 1999,
+                                              2000, 2001
+                SID: 1.10
+      Delta Created: 04/04/15 - 12:19:46
+         Last Delta: app/src/common/InterfaceRecord/_us 4/15/04 - 12:19:46 (/TaskEnv/sw/app/src/common/InterfaceRecord/_us/s.tbGirrawdetail.pc) 
+*/
+#pragma comment ( copyright, "@(#)MATRIX{app/src/common/InterfaceRecord/_us}[4/15/04-12:19:46 1.10] /TaskEnv/sw/app/src/common/InterfaceRecord/_us/s.tbGirrawdetail.pc (ENTER AUTHOR'S NAME HERE)\n" )
+/*
+  The contents of this file, its programs, all comments, code and information 
+               are the sole property of GLOBAL TRAVEL Inc. 
+     No duplication by any method, electronic or otherwise is permitted.
+============================================================ END GLOBAL BANNER*/
+#include <stdio.h>
+#include <stdlib.h>
+#include "C.h"
+
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				EXEC SQL INCLUDE "tbGirrawdetail.h";
+				SCGirrawdetailRead *gs_GirrawdetailRead;
+				SCGirrawdetailReadInd *gs_GirrawdetailReadInd;
+				long SQLCODE;
+			EXEC SQL END DECLARE SECTION;
+
+extern void setDbError(SQLCA *struct_sqlca, const char *context);
+
+int
+dbGirrawdetailRead (SCGirrawdetailRead *ps_GirrawdetailRead,
+			SCGirrawdetailReadInd *ps_GirrawdetailReadInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *det1;
+		char *det2;
+		char *det3;
+		char *det4;
+		char *det5;
+		char *det6;
+		char *det7;
+		char *det8;
+		char *det9;
+		char *det10;
+		char *det11;
+		char *det12;
+		char *det13;
+		char *det14;
+		char *det15;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_GirrawdetailRead = ps_GirrawdetailRead;
+			gs_GirrawdetailReadInd = ps_GirrawdetailReadInd;
+
+			det1 = gs_GirrawdetailRead->c_det1;
+			det2 = gs_GirrawdetailRead->c_det2;
+			det3 = gs_GirrawdetailRead->c_det3;
+			det4 = gs_GirrawdetailRead->c_det4;
+			det5 = gs_GirrawdetailRead->c_det5;
+			det6 = gs_GirrawdetailRead->c_det6;
+			det7 = gs_GirrawdetailRead->c_det7;
+			det8 = gs_GirrawdetailRead->c_det8;
+			det9 = gs_GirrawdetailRead->c_det9;
+			det10 = gs_GirrawdetailRead->c_det10;
+			det11 = gs_GirrawdetailRead->c_det11;
+			det12 = gs_GirrawdetailRead->c_det12;
+			det13 = gs_GirrawdetailRead->c_det13;
+			det14 = gs_GirrawdetailRead->c_det14;
+			det15 = gs_GirrawdetailRead->c_det15;
+
+			EXEC SQL EXEC
+			SP_Girrawdetail__read
+:gs_GirrawdetailRead->c_pc_session_id:gs_GirrawdetailReadInd->ind_pc_session_id,
+:gs_GirrawdetailRead->c_pi_subsect_id:gs_GirrawdetailReadInd->ind_pi_subsect_id,
+:gs_GirrawdetailRead->c_pi_line_number:gs_GirrawdetailReadInd->ind_pi_line_number,
+:gs_GirrawdetailRead->c_pc_interface_type:gs_GirrawdetailReadInd->ind_pc_interface_type OUTPUT,
+:gs_GirrawdetailRead->c_pd_interface_cdate:gs_GirrawdetailReadInd->ind_pd_interface_cdate OUTPUT,
+:gs_GirrawdetailRead->c_sec1:gs_GirrawdetailReadInd->ind_sec1 OUTPUT,
+:gs_GirrawdetailRead->c_sub1:gs_GirrawdetailReadInd->ind_sub1 OUTPUT,
+:gs_GirrawdetailRead->c_lno1:gs_GirrawdetailReadInd->ind_lno1 OUTPUT,
+:det1:gs_GirrawdetailReadInd->ind_det1 OUTPUT,
+:gs_GirrawdetailRead->c_sec2:gs_GirrawdetailReadInd->ind_sec2 OUTPUT,
+:gs_GirrawdetailRead->c_sub2:gs_GirrawdetailReadInd->ind_sub2 OUTPUT,
+:gs_GirrawdetailRead->c_lno2:gs_GirrawdetailReadInd->ind_lno2 OUTPUT,
+:det2:gs_GirrawdetailReadInd->ind_det2 OUTPUT,
+:gs_GirrawdetailRead->c_sec3:gs_GirrawdetailReadInd->ind_sec3 OUTPUT,
+:gs_GirrawdetailRead->c_sub3:gs_GirrawdetailReadInd->ind_sub3 OUTPUT,
+:gs_GirrawdetailRead->c_lno3:gs_GirrawdetailReadInd->ind_lno3 OUTPUT,
+:det3:gs_GirrawdetailReadInd->ind_det3 OUTPUT,
+:gs_GirrawdetailRead->c_sec4:gs_GirrawdetailReadInd->ind_sec4 OUTPUT,
+:gs_GirrawdetailRead->c_sub4:gs_GirrawdetailReadInd->ind_sub4 OUTPUT,
+:gs_GirrawdetailRead->c_lno4:gs_GirrawdetailReadInd->ind_lno4 OUTPUT,
+:det4:gs_GirrawdetailReadInd->ind_det4 OUTPUT,
+:gs_GirrawdetailRead->c_sec5:gs_GirrawdetailReadInd->ind_sec5 OUTPUT,
+:gs_GirrawdetailRead->c_sub5:gs_GirrawdetailReadInd->ind_sub5 OUTPUT,
+:gs_GirrawdetailRead->c_lno5:gs_GirrawdetailReadInd->ind_lno5 OUTPUT,
+:det5:gs_GirrawdetailReadInd->ind_det5 OUTPUT,
+:gs_GirrawdetailRead->c_sec6:gs_GirrawdetailReadInd->ind_sec6 OUTPUT,
+:gs_GirrawdetailRead->c_sub6:gs_GirrawdetailReadInd->ind_sub6 OUTPUT,
+:gs_GirrawdetailRead->c_lno6:gs_GirrawdetailReadInd->ind_lno6 OUTPUT,
+:det6:gs_GirrawdetailReadInd->ind_det6 OUTPUT,
+:gs_GirrawdetailRead->c_sec7:gs_GirrawdetailReadInd->ind_sec7 OUTPUT,
+:gs_GirrawdetailRead->c_sub7:gs_GirrawdetailReadInd->ind_sub7 OUTPUT,
+:gs_GirrawdetailRead->c_lno7:gs_GirrawdetailReadInd->ind_lno7 OUTPUT,
+:det7:gs_GirrawdetailReadInd->ind_det7 OUTPUT,
+:gs_GirrawdetailRead->c_sec8:gs_GirrawdetailReadInd->ind_sec8 OUTPUT,
+:gs_GirrawdetailRead->c_sub8:gs_GirrawdetailReadInd->ind_sub8 OUTPUT,
+:gs_GirrawdetailRead->c_lno8:gs_GirrawdetailReadInd->ind_lno8 OUTPUT,
+:det8:gs_GirrawdetailReadInd->ind_det8 OUTPUT,
+:gs_GirrawdetailRead->c_sec9:gs_GirrawdetailReadInd->ind_sec9 OUTPUT,
+:gs_GirrawdetailRead->c_sub9:gs_GirrawdetailReadInd->ind_sub9 OUTPUT,
+:gs_GirrawdetailRead->c_lno9:gs_GirrawdetailReadInd->ind_lno9 OUTPUT,
+:det9:gs_GirrawdetailReadInd->ind_det9 OUTPUT,
+:gs_GirrawdetailRead->c_sec10:gs_GirrawdetailReadInd->ind_sec10 OUTPUT,
+:gs_GirrawdetailRead->c_sub10:gs_GirrawdetailReadInd->ind_sub10 OUTPUT,
+:gs_GirrawdetailRead->c_lno10:gs_GirrawdetailReadInd->ind_lno10 OUTPUT,
+:det10:gs_GirrawdetailReadInd->ind_det10 OUTPUT,
+:gs_GirrawdetailRead->c_sec11:gs_GirrawdetailReadInd->ind_sec11 OUTPUT,
+:gs_GirrawdetailRead->c_sub11:gs_GirrawdetailReadInd->ind_sub11 OUTPUT,
+:gs_GirrawdetailRead->c_lno11:gs_GirrawdetailReadInd->ind_lno11 OUTPUT,
+:det11:gs_GirrawdetailReadInd->ind_det11 OUTPUT,
+:gs_GirrawdetailRead->c_sec12:gs_GirrawdetailReadInd->ind_sec12 OUTPUT,
+:gs_GirrawdetailRead->c_sub12:gs_GirrawdetailReadInd->ind_sub12 OUTPUT,
+:gs_GirrawdetailRead->c_lno12:gs_GirrawdetailReadInd->ind_lno12 OUTPUT,
+:det12:gs_GirrawdetailReadInd->ind_det12 OUTPUT,
+:gs_GirrawdetailRead->c_sec13:gs_GirrawdetailReadInd->ind_sec13 OUTPUT,
+:gs_GirrawdetailRead->c_sub13:gs_GirrawdetailReadInd->ind_sub13 OUTPUT,
+:gs_GirrawdetailRead->c_lno13:gs_GirrawdetailReadInd->ind_lno13 OUTPUT,
+:det13:gs_GirrawdetailReadInd->ind_det13 OUTPUT,
+:gs_GirrawdetailRead->c_sec14:gs_GirrawdetailReadInd->ind_sec14 OUTPUT,
+:gs_GirrawdetailRead->c_sub14:gs_GirrawdetailReadInd->ind_sub14 OUTPUT,
+:gs_GirrawdetailRead->c_lno14:gs_GirrawdetailReadInd->ind_lno14 OUTPUT,
+:det14:gs_GirrawdetailReadInd->ind_det14 OUTPUT,
+:gs_GirrawdetailRead->c_sec15:gs_GirrawdetailReadInd->ind_sec15 OUTPUT,
+:gs_GirrawdetailRead->c_sub15:gs_GirrawdetailReadInd->ind_sub15 OUTPUT,
+:gs_GirrawdetailRead->c_lno15:gs_GirrawdetailReadInd->ind_lno15 OUTPUT,
+:det15:gs_GirrawdetailReadInd->ind_det15 OUTPUT,
+:gs_GirrawdetailRead->c_pi_counter:gs_GirrawdetailReadInd->ind_pi_counter OUTPUT,
+:gs_GirrawdetailRead->c_pc_more_data:gs_GirrawdetailReadInd->ind_pc_more_data OUTPUT,
+:gs_GirrawdetailRead->c_pi_key_subsect_id:gs_GirrawdetailReadInd->ind_pi_key_subsect_id OUTPUT,
+:gs_GirrawdetailRead->c_pi_key_line_number:gs_GirrawdetailReadInd->ind_pi_key_line_number OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_Girrawdetail__read");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_Girrawdetail__read function*/

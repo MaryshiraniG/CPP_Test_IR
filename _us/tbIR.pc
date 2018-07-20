@@ -1,0 +1,2509 @@
+/*===================pc_source===============================START GLOBAL BANNER
+(c) Copyright GLOBAL Travel Computer Services 1994, 1995, 1996, 1997, 1998, 1999,
+                                              2000, 2001
+                SID: 1.98
+      Delta Created: 17/10/18 - 15:12:30
+         Last Delta: app/src/common/InterfaceRecord/_us 10/18/17 - 15:12:30 (/TaskEnv/sw/app/src/common/InterfaceRecord/_us/s.tbIR.pc)
+*/
+#pragma comment ( copyright, "@(#)MATRIX{app/src/common/InterfaceRecord/_us}[10/18/17-15:12:30 1.98] /TaskEnv/sw/app/src/common/InterfaceRecord/_us/s.tbIR.pc (ENTER AUTHOR'S NAME HERE)\n" )
+/*
+  The contents of this file, its programs, all comments, code and information 
+               are the sole property of GLOBAL TRAVEL Inc. 
+     No duplication by any method, electronic or otherwise is permitted.
+============================================================ END GLOBAL BANNER*/
+
+/*
+PURPOSE:
+============================================================================
+CHANGE HISTORY: ( PLEASE PUT MOST RECENT CHANGE ENTRY ALWAYS ON TOP )
+============================================================================
+DATE:       SCR#:   TASKID: INIT DESCRIPTION
+-------     ------  ------- ---- ------------------------------------------------
+16MAY2012   509845  c0572    WW  Process void ticket for CWT US M&G
+============================================================================
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "C.h"
+
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				EXEC SQL INCLUDE "tbIR.h";
+				SCIRCreateIraddress *gs_IRCreateIraddress;
+				SCIRCreateIraddressInd *gs_IRCreateIraddressInd;
+				long SQLCODE;
+			EXEC SQL END DECLARE SECTION;
+
+extern void setDbError(SQLCA *struct_sqlca, const char *context);
+
+int
+dbIRCreateIraddress (SCIRCreateIraddress *ps_IRCreateIraddress,
+			SCIRCreateIraddressInd *ps_IRCreateIraddressInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *addr11;
+		char *addr21;
+		char *addr31;
+		char *addr41;
+		char *addr51;
+		char *addr61;
+		char *phone_acode1;
+		char *phone_no1;
+		char *bphone_acode1;
+		char *bphone_no1;
+		char *fax_acode1;
+		char *fax_no1;
+		char *addr12;
+		char *addr22;
+		char *addr32;
+		char *addr42;
+		char *addr52;
+		char *addr62;
+		char *phone_acode2;
+		char *phone_no2;
+		char *bphone_acode2;
+		char *bphone_no2;
+		char *fax_acode2;
+		char *fax_no2;
+		char *mphone_acode1;
+		char *mphone_no1;
+		char *mphone_acode2;
+		char *mphone_no2;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIraddress = ps_IRCreateIraddress;
+			gs_IRCreateIraddressInd = ps_IRCreateIraddressInd;
+
+			addr11 = gs_IRCreateIraddress->c_addr11;
+			addr21 = gs_IRCreateIraddress->c_addr21;
+			addr31 = gs_IRCreateIraddress->c_addr31;
+			addr41 = gs_IRCreateIraddress->c_addr41;
+			addr51 = gs_IRCreateIraddress->c_addr51;
+			addr61 = gs_IRCreateIraddress->c_addr61;
+			phone_acode1 = gs_IRCreateIraddress->c_phone_acode1;
+			phone_no1 = gs_IRCreateIraddress->c_phone_no1;
+			bphone_acode1 = gs_IRCreateIraddress->c_bphone_acode1;
+			bphone_no1 = gs_IRCreateIraddress->c_bphone_no1;
+			fax_acode1 = gs_IRCreateIraddress->c_fax_acode1;
+			fax_no1 = gs_IRCreateIraddress->c_fax_no1;
+			addr12 = gs_IRCreateIraddress->c_addr12;
+			addr22 = gs_IRCreateIraddress->c_addr22;
+			addr32 = gs_IRCreateIraddress->c_addr32;
+			addr42 = gs_IRCreateIraddress->c_addr42;
+			addr52 = gs_IRCreateIraddress->c_addr52;
+			addr62 = gs_IRCreateIraddress->c_addr62;
+			phone_acode2 = gs_IRCreateIraddress->c_phone_acode2;
+			phone_no2 = gs_IRCreateIraddress->c_phone_no2;
+			bphone_acode2 = gs_IRCreateIraddress->c_bphone_acode2;
+			bphone_no2 = gs_IRCreateIraddress->c_bphone_no2;
+			fax_acode2 = gs_IRCreateIraddress->c_fax_acode2;
+			fax_no2 = gs_IRCreateIraddress->c_fax_no2;
+			mphone_acode1 = gs_IRCreateIraddress->c_mphone_acode1;
+			mphone_no1 = gs_IRCreateIraddress->c_mphone_no1;
+			mphone_acode2 = gs_IRCreateIraddress->c_mphone_acode2;
+			mphone_no2 = gs_IRCreateIraddress->c_mphone_no2;
+
+			EXEC SQL EXEC
+			SP_IR__createIraddress
+:gs_IRCreateIraddress->c_session_id:gs_IRCreateIraddressInd->ind_session_id,
+:gs_IRCreateIraddress->c_type1:gs_IRCreateIraddressInd->ind_type1,
+:addr11:gs_IRCreateIraddressInd->ind_addr11,
+:addr21:gs_IRCreateIraddressInd->ind_addr21,
+:addr31:gs_IRCreateIraddressInd->ind_addr31,
+:addr41:gs_IRCreateIraddressInd->ind_addr41,
+:addr51:gs_IRCreateIraddressInd->ind_addr51,
+:addr61:gs_IRCreateIraddressInd->ind_addr61,
+:phone_acode1:gs_IRCreateIraddressInd->ind_phone_acode1,
+:phone_no1:gs_IRCreateIraddressInd->ind_phone_no1,
+:bphone_acode1:gs_IRCreateIraddressInd->ind_bphone_acode1,
+:bphone_no1:gs_IRCreateIraddressInd->ind_bphone_no1,
+:fax_acode1:gs_IRCreateIraddressInd->ind_fax_acode1,
+:fax_no1:gs_IRCreateIraddressInd->ind_fax_no1,
+:gs_IRCreateIraddress->c_type2:gs_IRCreateIraddressInd->ind_type2,
+:addr12:gs_IRCreateIraddressInd->ind_addr12,
+:addr22:gs_IRCreateIraddressInd->ind_addr22,
+:addr32:gs_IRCreateIraddressInd->ind_addr32,
+:addr42:gs_IRCreateIraddressInd->ind_addr42,
+:addr52:gs_IRCreateIraddressInd->ind_addr52,
+:addr62:gs_IRCreateIraddressInd->ind_addr62,
+:phone_acode2:gs_IRCreateIraddressInd->ind_phone_acode2,
+:phone_no2:gs_IRCreateIraddressInd->ind_phone_no2,
+:bphone_acode2:gs_IRCreateIraddressInd->ind_bphone_acode2,
+:bphone_no2:gs_IRCreateIraddressInd->ind_bphone_no2,
+:fax_acode2:gs_IRCreateIraddressInd->ind_fax_acode2,
+:fax_no2:gs_IRCreateIraddressInd->ind_fax_no2,
+:gs_IRCreateIraddress->c_pi_sqlcode:gs_IRCreateIraddressInd->ind_pi_sqlcode OUTPUT,
+:mphone_acode1:gs_IRCreateIraddressInd->ind_mphone_acode1,
+:mphone_no1:gs_IRCreateIraddressInd->ind_mphone_no1,
+:mphone_acode2:gs_IRCreateIraddressInd->ind_mphone_acode2,
+:mphone_no2:gs_IRCreateIraddressInd->ind_mphone_no2;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIraddress");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIraddress function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrfrequentuser *gs_IRCreateIrfrequentuser;
+				SCIRCreateIrfrequentuserInd *gs_IRCreateIrfrequentuserInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrfrequentuser (SCIRCreateIrfrequentuser *ps_IRCreateIrfrequentuser,
+			SCIRCreateIrfrequentuserInd *ps_IRCreateIrfrequentuserInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *fup_type1;
+		char *fup1;
+		char *fup_type2;
+		char *fup2;
+		char *fup_type3;
+		char *fup3;
+		char *fup_type4;
+		char *fup4;
+		char *fup_type5;
+		char *fup5;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrfrequentuser = ps_IRCreateIrfrequentuser;
+			gs_IRCreateIrfrequentuserInd = ps_IRCreateIrfrequentuserInd;
+
+			fup_type1 = gs_IRCreateIrfrequentuser->c_fup_type1;
+			fup1 = gs_IRCreateIrfrequentuser->c_fup1;
+			fup_type2 = gs_IRCreateIrfrequentuser->c_fup_type2;
+			fup2 = gs_IRCreateIrfrequentuser->c_fup2;
+			fup_type3 = gs_IRCreateIrfrequentuser->c_fup_type3;
+			fup3 = gs_IRCreateIrfrequentuser->c_fup3;
+			fup_type4 = gs_IRCreateIrfrequentuser->c_fup_type4;
+			fup4 = gs_IRCreateIrfrequentuser->c_fup4;
+			fup_type5 = gs_IRCreateIrfrequentuser->c_fup_type5;
+			fup5 = gs_IRCreateIrfrequentuser->c_fup5;
+
+			EXEC SQL EXEC
+			SP_IR__createIrfrequentuser
+:gs_IRCreateIrfrequentuser->c_session_id:gs_IRCreateIrfrequentuserInd->ind_session_id,
+:gs_IRCreateIrfrequentuser->c_pax_id1:gs_IRCreateIrfrequentuserInd->ind_pax_id1,
+:gs_IRCreateIrfrequentuser->c_sup_id1:gs_IRCreateIrfrequentuserInd->ind_sup_id1,
+:fup_type1:gs_IRCreateIrfrequentuserInd->ind_fup_type1,
+:fup1:gs_IRCreateIrfrequentuserInd->ind_fup1,
+:gs_IRCreateIrfrequentuser->c_fup_status1:gs_IRCreateIrfrequentuserInd->ind_fup_status1,
+:gs_IRCreateIrfrequentuser->c_srvc_sup_id1:gs_IRCreateIrfrequentuserInd->ind_srvc_sup_id1,
+:gs_IRCreateIrfrequentuser->c_pax_id2:gs_IRCreateIrfrequentuserInd->ind_pax_id2,
+:gs_IRCreateIrfrequentuser->c_sup_id2:gs_IRCreateIrfrequentuserInd->ind_sup_id2,
+:fup_type2:gs_IRCreateIrfrequentuserInd->ind_fup_type2,
+:fup2:gs_IRCreateIrfrequentuserInd->ind_fup2,
+:gs_IRCreateIrfrequentuser->c_fup_status2:gs_IRCreateIrfrequentuserInd->ind_fup_status2,
+:gs_IRCreateIrfrequentuser->c_srvc_sup_id2:gs_IRCreateIrfrequentuserInd->ind_srvc_sup_id2,
+:gs_IRCreateIrfrequentuser->c_pax_id3:gs_IRCreateIrfrequentuserInd->ind_pax_id3,
+:gs_IRCreateIrfrequentuser->c_sup_id3:gs_IRCreateIrfrequentuserInd->ind_sup_id3,
+:fup_type3:gs_IRCreateIrfrequentuserInd->ind_fup_type3,
+:fup3:gs_IRCreateIrfrequentuserInd->ind_fup3,
+:gs_IRCreateIrfrequentuser->c_fup_status3:gs_IRCreateIrfrequentuserInd->ind_fup_status3,
+:gs_IRCreateIrfrequentuser->c_srvc_sup_id3:gs_IRCreateIrfrequentuserInd->ind_srvc_sup_id3,
+:gs_IRCreateIrfrequentuser->c_pax_id4:gs_IRCreateIrfrequentuserInd->ind_pax_id4,
+:gs_IRCreateIrfrequentuser->c_sup_id4:gs_IRCreateIrfrequentuserInd->ind_sup_id4,
+:fup_type4:gs_IRCreateIrfrequentuserInd->ind_fup_type4,
+:fup4:gs_IRCreateIrfrequentuserInd->ind_fup4,
+:gs_IRCreateIrfrequentuser->c_fup_status4:gs_IRCreateIrfrequentuserInd->ind_fup_status4,
+:gs_IRCreateIrfrequentuser->c_srvc_sup_id4:gs_IRCreateIrfrequentuserInd->ind_srvc_sup_id4,
+:gs_IRCreateIrfrequentuser->c_pax_id5:gs_IRCreateIrfrequentuserInd->ind_pax_id5,
+:gs_IRCreateIrfrequentuser->c_sup_id5:gs_IRCreateIrfrequentuserInd->ind_sup_id5,
+:fup_type5:gs_IRCreateIrfrequentuserInd->ind_fup_type5,
+:fup5:gs_IRCreateIrfrequentuserInd->ind_fup5,
+:gs_IRCreateIrfrequentuser->c_fup_status5:gs_IRCreateIrfrequentuserInd->ind_fup_status5,
+:gs_IRCreateIrfrequentuser->c_srvc_sup_id5:gs_IRCreateIrfrequentuserInd->ind_srvc_sup_id5,
+:gs_IRCreateIrfrequentuser->c_pi_sqlcode:gs_IRCreateIrfrequentuserInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrfrequentuser");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrfrequentuser function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrpayment *gs_IRCreateIrpayment;
+				SCIRCreateIrpaymentInd *gs_IRCreateIrpaymentInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrpayment (SCIRCreateIrpayment *ps_IRCreateIrpayment,
+			SCIRCreateIrpaymentInd *ps_IRCreateIrpaymentInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *cc_no1;
+		char *auth_no1;
+		char *cc_no2;
+		char *auth_no2;
+		char *cc_no3;
+		char *auth_no3;
+		char *cc_no4;
+		char *auth_no4;
+		char *cc_no5;
+		char *auth_no5;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrpayment = ps_IRCreateIrpayment;
+			gs_IRCreateIrpaymentInd = ps_IRCreateIrpaymentInd;
+
+			cc_no1 = gs_IRCreateIrpayment->c_cc_no1;
+			auth_no1 = gs_IRCreateIrpayment->c_auth_no1;
+			cc_no2 = gs_IRCreateIrpayment->c_cc_no2;
+			auth_no2 = gs_IRCreateIrpayment->c_auth_no2;
+			cc_no3 = gs_IRCreateIrpayment->c_cc_no3;
+			auth_no3 = gs_IRCreateIrpayment->c_auth_no3;
+			cc_no4 = gs_IRCreateIrpayment->c_cc_no4;
+			auth_no4 = gs_IRCreateIrpayment->c_auth_no4;
+			cc_no5 = gs_IRCreateIrpayment->c_cc_no5;
+			auth_no5 = gs_IRCreateIrpayment->c_auth_no5;
+
+			EXEC SQL EXEC
+			SP_IR__createIrpayment
+:gs_IRCreateIrpayment->c_session_id:gs_IRCreateIrpaymentInd->ind_session_id,
+:gs_IRCreateIrpayment->c_pax_id1:gs_IRCreateIrpaymentInd->ind_pax_id1,
+:gs_IRCreateIrpayment->c_line_number1:gs_IRCreateIrpaymentInd->ind_line_number1,
+:gs_IRCreateIrpayment->c_pay_id1:gs_IRCreateIrpaymentInd->ind_pay_id1,
+:gs_IRCreateIrpayment->c_form_of_pay1:gs_IRCreateIrpaymentInd->ind_form_of_pay1,
+:gs_IRCreateIrpayment->c_amount1:gs_IRCreateIrpaymentInd->ind_amount1,
+:gs_IRCreateIrpayment->c_cc_id1:gs_IRCreateIrpaymentInd->ind_cc_id1,
+:cc_no1:gs_IRCreateIrpaymentInd->ind_cc_no1,
+:gs_IRCreateIrpayment->c_cc_exp_date1:gs_IRCreateIrpaymentInd->ind_cc_exp_date1,
+:auth_no1:gs_IRCreateIrpaymentInd->ind_auth_no1,
+:gs_IRCreateIrpayment->c_auth_source1:gs_IRCreateIrpaymentInd->ind_auth_source1,
+:gs_IRCreateIrpayment->c_pax_id2:gs_IRCreateIrpaymentInd->ind_pax_id2,
+:gs_IRCreateIrpayment->c_line_number2:gs_IRCreateIrpaymentInd->ind_line_number2,
+:gs_IRCreateIrpayment->c_pay_id2:gs_IRCreateIrpaymentInd->ind_pay_id2,
+:gs_IRCreateIrpayment->c_form_of_pay2:gs_IRCreateIrpaymentInd->ind_form_of_pay2,
+:gs_IRCreateIrpayment->c_amount2:gs_IRCreateIrpaymentInd->ind_amount2,
+:gs_IRCreateIrpayment->c_cc_id2:gs_IRCreateIrpaymentInd->ind_cc_id2,
+:cc_no2:gs_IRCreateIrpaymentInd->ind_cc_no2,
+:gs_IRCreateIrpayment->c_cc_exp_date2:gs_IRCreateIrpaymentInd->ind_cc_exp_date2,
+:auth_no2:gs_IRCreateIrpaymentInd->ind_auth_no2,
+:gs_IRCreateIrpayment->c_auth_source2:gs_IRCreateIrpaymentInd->ind_auth_source2,
+:gs_IRCreateIrpayment->c_pax_id3:gs_IRCreateIrpaymentInd->ind_pax_id3,
+:gs_IRCreateIrpayment->c_line_number3:gs_IRCreateIrpaymentInd->ind_line_number3,
+:gs_IRCreateIrpayment->c_pay_id3:gs_IRCreateIrpaymentInd->ind_pay_id3,
+:gs_IRCreateIrpayment->c_form_of_pay3:gs_IRCreateIrpaymentInd->ind_form_of_pay3,
+:gs_IRCreateIrpayment->c_amount3:gs_IRCreateIrpaymentInd->ind_amount3,
+:gs_IRCreateIrpayment->c_cc_id3:gs_IRCreateIrpaymentInd->ind_cc_id3,
+:cc_no3:gs_IRCreateIrpaymentInd->ind_cc_no3,
+:gs_IRCreateIrpayment->c_cc_exp_date3:gs_IRCreateIrpaymentInd->ind_cc_exp_date3,
+:auth_no3:gs_IRCreateIrpaymentInd->ind_auth_no3,
+:gs_IRCreateIrpayment->c_auth_source3:gs_IRCreateIrpaymentInd->ind_auth_source3,
+:gs_IRCreateIrpayment->c_pax_id4:gs_IRCreateIrpaymentInd->ind_pax_id4,
+:gs_IRCreateIrpayment->c_line_number4:gs_IRCreateIrpaymentInd->ind_line_number4,
+:gs_IRCreateIrpayment->c_pay_id4:gs_IRCreateIrpaymentInd->ind_pay_id4,
+:gs_IRCreateIrpayment->c_form_of_pay4:gs_IRCreateIrpaymentInd->ind_form_of_pay4,
+:gs_IRCreateIrpayment->c_amount4:gs_IRCreateIrpaymentInd->ind_amount4,
+:gs_IRCreateIrpayment->c_cc_id4:gs_IRCreateIrpaymentInd->ind_cc_id4,
+:cc_no4:gs_IRCreateIrpaymentInd->ind_cc_no4,
+:gs_IRCreateIrpayment->c_cc_exp_date4:gs_IRCreateIrpaymentInd->ind_cc_exp_date4,
+:auth_no4:gs_IRCreateIrpaymentInd->ind_auth_no4,
+:gs_IRCreateIrpayment->c_auth_source4:gs_IRCreateIrpaymentInd->ind_auth_source4,
+:gs_IRCreateIrpayment->c_pax_id5:gs_IRCreateIrpaymentInd->ind_pax_id5,
+:gs_IRCreateIrpayment->c_line_number5:gs_IRCreateIrpaymentInd->ind_line_number5,
+:gs_IRCreateIrpayment->c_pay_id5:gs_IRCreateIrpaymentInd->ind_pay_id5,
+:gs_IRCreateIrpayment->c_form_of_pay5:gs_IRCreateIrpaymentInd->ind_form_of_pay5,
+:gs_IRCreateIrpayment->c_amount5:gs_IRCreateIrpaymentInd->ind_amount5,
+:gs_IRCreateIrpayment->c_cc_id5:gs_IRCreateIrpaymentInd->ind_cc_id5,
+:cc_no5:gs_IRCreateIrpaymentInd->ind_cc_no5,
+:gs_IRCreateIrpayment->c_cc_exp_date5:gs_IRCreateIrpaymentInd->ind_cc_exp_date5,
+:auth_no5:gs_IRCreateIrpaymentInd->ind_auth_no5,
+:gs_IRCreateIrpayment->c_auth_source5:gs_IRCreateIrpaymentInd->ind_auth_source5,
+:gs_IRCreateIrpayment->c_pi_sqlcode:gs_IRCreateIrpaymentInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrpayment");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrpayment function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrperson *gs_IRCreateIrperson;
+				SCIRCreateIrpersonInd *gs_IRCreateIrpersonInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrperson (SCIRCreateIrperson *ps_IRCreateIrperson,
+			SCIRCreateIrpersonInd *ps_IRCreateIrpersonInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *title1;
+		char *last_name1;
+		char *first_name1;
+		char *passport_no1;
+		char *reference1;
+		char *crs_invoice1;
+		char *title2;
+		char *last_name2;
+		char *first_name2;
+		char *passport_no2;
+		char *reference2;
+		char *crs_invoice2;
+		char *title3;
+		char *last_name3;
+		char *first_name3;
+		char *passport_no3;
+		char *reference3;
+		char *crs_invoice3;
+		char *title4;
+		char *last_name4;
+		char *first_name4;
+		char *passport_no4;
+		char *reference4;
+		char *crs_invoice4;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrperson = ps_IRCreateIrperson;
+			gs_IRCreateIrpersonInd = ps_IRCreateIrpersonInd;
+
+			title1 = gs_IRCreateIrperson->c_title1;
+			last_name1 = gs_IRCreateIrperson->c_last_name1;
+			first_name1 = gs_IRCreateIrperson->c_first_name1;
+			passport_no1 = gs_IRCreateIrperson->c_passport_no1;
+			reference1 = gs_IRCreateIrperson->c_reference1;
+			crs_invoice1 = gs_IRCreateIrperson->c_crs_invoice1;
+			title2 = gs_IRCreateIrperson->c_title2;
+			last_name2 = gs_IRCreateIrperson->c_last_name2;
+			first_name2 = gs_IRCreateIrperson->c_first_name2;
+			passport_no2 = gs_IRCreateIrperson->c_passport_no2;
+			reference2 = gs_IRCreateIrperson->c_reference2;
+			crs_invoice2 = gs_IRCreateIrperson->c_crs_invoice2;
+			title3 = gs_IRCreateIrperson->c_title3;
+			last_name3 = gs_IRCreateIrperson->c_last_name3;
+			first_name3 = gs_IRCreateIrperson->c_first_name3;
+			passport_no3 = gs_IRCreateIrperson->c_passport_no3;
+			reference3 = gs_IRCreateIrperson->c_reference3;
+			crs_invoice3 = gs_IRCreateIrperson->c_crs_invoice3;
+			title4 = gs_IRCreateIrperson->c_title4;
+			last_name4 = gs_IRCreateIrperson->c_last_name4;
+			first_name4 = gs_IRCreateIrperson->c_first_name4;
+			passport_no4 = gs_IRCreateIrperson->c_passport_no4;
+			reference4 = gs_IRCreateIrperson->c_reference4;
+			crs_invoice4 = gs_IRCreateIrperson->c_crs_invoice4;
+
+			EXEC SQL EXEC
+			SP_IR__createIrperson
+:gs_IRCreateIrperson->c_session_id:gs_IRCreateIrpersonInd->ind_session_id,
+:gs_IRCreateIrperson->c_pax_id1:gs_IRCreateIrpersonInd->ind_pax_id1,
+:title1:gs_IRCreateIrpersonInd->ind_title1,
+:last_name1:gs_IRCreateIrpersonInd->ind_last_name1,
+:first_name1:gs_IRCreateIrpersonInd->ind_first_name1,
+:gs_IRCreateIrperson->c_new_pax_id1:gs_IRCreateIrpersonInd->ind_new_pax_id1,
+:gs_IRCreateIrperson->c_new_pax_line1:gs_IRCreateIrpersonInd->ind_new_pax_line1,
+:gs_IRCreateIrperson->c_sex1:gs_IRCreateIrpersonInd->ind_sex1,
+:gs_IRCreateIrperson->c_smoking1:gs_IRCreateIrpersonInd->ind_smoking1,
+:gs_IRCreateIrperson->c_ctry_id1:gs_IRCreateIrpersonInd->ind_ctry_id1,
+:passport_no1:gs_IRCreateIrpersonInd->ind_passport_no1,
+:gs_IRCreateIrperson->c_passport_exp1:gs_IRCreateIrpersonInd->ind_passport_exp1,
+:reference1:gs_IRCreateIrpersonInd->ind_reference1,
+:crs_invoice1:gs_IRCreateIrpersonInd->ind_crs_invoice1,
+:gs_IRCreateIrperson->c_traveller_id1:gs_IRCreateIrpersonInd->ind_traveller_id1,
+:gs_IRCreateIrperson->c_pax_id2:gs_IRCreateIrpersonInd->ind_pax_id2,
+:title2:gs_IRCreateIrpersonInd->ind_title2,
+:last_name2:gs_IRCreateIrpersonInd->ind_last_name2,
+:first_name2:gs_IRCreateIrpersonInd->ind_first_name2,
+:gs_IRCreateIrperson->c_new_pax_id2:gs_IRCreateIrpersonInd->ind_new_pax_id2,
+:gs_IRCreateIrperson->c_new_pax_line2:gs_IRCreateIrpersonInd->ind_new_pax_line2,
+:gs_IRCreateIrperson->c_sex2:gs_IRCreateIrpersonInd->ind_sex2,
+:gs_IRCreateIrperson->c_smoking2:gs_IRCreateIrpersonInd->ind_smoking2,
+:gs_IRCreateIrperson->c_ctry_id2:gs_IRCreateIrpersonInd->ind_ctry_id2,
+:passport_no2:gs_IRCreateIrpersonInd->ind_passport_no2,
+:gs_IRCreateIrperson->c_passport_exp2:gs_IRCreateIrpersonInd->ind_passport_exp2,
+:reference2:gs_IRCreateIrpersonInd->ind_reference2,
+:crs_invoice2:gs_IRCreateIrpersonInd->ind_crs_invoice2,
+:gs_IRCreateIrperson->c_traveller_id2:gs_IRCreateIrpersonInd->ind_traveller_id2,
+:gs_IRCreateIrperson->c_pax_id3:gs_IRCreateIrpersonInd->ind_pax_id3,
+:title3:gs_IRCreateIrpersonInd->ind_title3,
+:last_name3:gs_IRCreateIrpersonInd->ind_last_name3,
+:first_name3:gs_IRCreateIrpersonInd->ind_first_name3,
+:gs_IRCreateIrperson->c_new_pax_id3:gs_IRCreateIrpersonInd->ind_new_pax_id3,
+:gs_IRCreateIrperson->c_new_pax_line3:gs_IRCreateIrpersonInd->ind_new_pax_line3,
+:gs_IRCreateIrperson->c_sex3:gs_IRCreateIrpersonInd->ind_sex3,
+:gs_IRCreateIrperson->c_smoking3:gs_IRCreateIrpersonInd->ind_smoking3,
+:gs_IRCreateIrperson->c_ctry_id3:gs_IRCreateIrpersonInd->ind_ctry_id3,
+:passport_no3:gs_IRCreateIrpersonInd->ind_passport_no3,
+:gs_IRCreateIrperson->c_passport_exp3:gs_IRCreateIrpersonInd->ind_passport_exp3,
+:reference3:gs_IRCreateIrpersonInd->ind_reference3,
+:crs_invoice3:gs_IRCreateIrpersonInd->ind_crs_invoice3,
+:gs_IRCreateIrperson->c_traveller_id3:gs_IRCreateIrpersonInd->ind_traveller_id3,
+:gs_IRCreateIrperson->c_pax_id4:gs_IRCreateIrpersonInd->ind_pax_id4,
+:title4:gs_IRCreateIrpersonInd->ind_title4,
+:last_name4:gs_IRCreateIrpersonInd->ind_last_name4,
+:first_name4:gs_IRCreateIrpersonInd->ind_first_name4,
+:gs_IRCreateIrperson->c_new_pax_id4:gs_IRCreateIrpersonInd->ind_new_pax_id4,
+:gs_IRCreateIrperson->c_new_pax_line4:gs_IRCreateIrpersonInd->ind_new_pax_line4,
+:gs_IRCreateIrperson->c_sex4:gs_IRCreateIrpersonInd->ind_sex4,
+:gs_IRCreateIrperson->c_smoking4:gs_IRCreateIrpersonInd->ind_smoking4,
+:gs_IRCreateIrperson->c_ctry_id4:gs_IRCreateIrpersonInd->ind_ctry_id4,
+:passport_no4:gs_IRCreateIrpersonInd->ind_passport_no4,
+:gs_IRCreateIrperson->c_passport_exp4:gs_IRCreateIrpersonInd->ind_passport_exp4,
+:reference4:gs_IRCreateIrpersonInd->ind_reference4,
+:crs_invoice4:gs_IRCreateIrpersonInd->ind_crs_invoice4,
+:gs_IRCreateIrperson->c_traveller_id4:gs_IRCreateIrpersonInd->ind_traveller_id4,
+:gs_IRCreateIrperson->c_pi_sqlcode:gs_IRCreateIrpersonInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrperson");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrperson function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrremark *gs_IRCreateIrremark;
+				SCIRCreateIrremarkInd *gs_IRCreateIrremarkInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrremark (SCIRCreateIrremark *ps_IRCreateIrremark,
+			SCIRCreateIrremarkInd *ps_IRCreateIrremarkInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *remark1;
+		char *remark2;
+		char *remark3;
+		char *remark4;
+		char *remark5;
+		char *remark6;
+		char *remark7;
+		char *remark8;
+		char *remark9;
+		char *remark0;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrremark = ps_IRCreateIrremark;
+			gs_IRCreateIrremarkInd = ps_IRCreateIrremarkInd;
+
+			remark1 = gs_IRCreateIrremark->c_remark1;
+			remark2 = gs_IRCreateIrremark->c_remark2;
+			remark3 = gs_IRCreateIrremark->c_remark3;
+			remark4 = gs_IRCreateIrremark->c_remark4;
+			remark5 = gs_IRCreateIrremark->c_remark5;
+			remark6 = gs_IRCreateIrremark->c_remark6;
+			remark7 = gs_IRCreateIrremark->c_remark7;
+			remark8 = gs_IRCreateIrremark->c_remark8;
+			remark9 = gs_IRCreateIrremark->c_remark9;
+			remark0 = gs_IRCreateIrremark->c_remark0;
+
+			EXEC SQL EXEC
+			SP_IR__createIrremark
+:gs_IRCreateIrremark->c_session_id:gs_IRCreateIrremarkInd->ind_session_id,
+:gs_IRCreateIrremark->c_line_number1:gs_IRCreateIrremarkInd->ind_line_number1,
+:gs_IRCreateIrremark->c_pax_id1:gs_IRCreateIrremarkInd->ind_pax_id1,
+:gs_IRCreateIrremark->c_type1:gs_IRCreateIrremarkInd->ind_type1,
+:remark1:gs_IRCreateIrremarkInd->ind_remark1,
+:gs_IRCreateIrremark->c_itin_type1:gs_IRCreateIrremarkInd->ind_itin_type1,
+:gs_IRCreateIrremark->c_tra_line_number1:gs_IRCreateIrremarkInd->ind_tra_line_number1,
+:gs_IRCreateIrremark->c_ren_line_number1:gs_IRCreateIrremarkInd->ind_ren_line_number1,
+:gs_IRCreateIrremark->c_oth_line_number1:gs_IRCreateIrremarkInd->ind_oth_line_number1,
+:gs_IRCreateIrremark->c_udi_line_number1:gs_IRCreateIrremarkInd->ind_udi_line_number1,
+:gs_IRCreateIrremark->c_line_number2:gs_IRCreateIrremarkInd->ind_line_number2,
+:gs_IRCreateIrremark->c_pax_id2:gs_IRCreateIrremarkInd->ind_pax_id2,
+:gs_IRCreateIrremark->c_type2:gs_IRCreateIrremarkInd->ind_type2,
+:remark2:gs_IRCreateIrremarkInd->ind_remark2,
+:gs_IRCreateIrremark->c_itin_type2:gs_IRCreateIrremarkInd->ind_itin_type2,
+:gs_IRCreateIrremark->c_tra_line_number2:gs_IRCreateIrremarkInd->ind_tra_line_number2,
+:gs_IRCreateIrremark->c_ren_line_number2:gs_IRCreateIrremarkInd->ind_ren_line_number2,
+:gs_IRCreateIrremark->c_oth_line_number2:gs_IRCreateIrremarkInd->ind_oth_line_number2,
+:gs_IRCreateIrremark->c_udi_line_number2:gs_IRCreateIrremarkInd->ind_udi_line_number2,
+:gs_IRCreateIrremark->c_line_number3:gs_IRCreateIrremarkInd->ind_line_number3,
+:gs_IRCreateIrremark->c_pax_id3:gs_IRCreateIrremarkInd->ind_pax_id3,
+:gs_IRCreateIrremark->c_type3:gs_IRCreateIrremarkInd->ind_type3,
+:remark3:gs_IRCreateIrremarkInd->ind_remark3,
+:gs_IRCreateIrremark->c_itin_type3:gs_IRCreateIrremarkInd->ind_itin_type3,
+:gs_IRCreateIrremark->c_tra_line_number3:gs_IRCreateIrremarkInd->ind_tra_line_number3,
+:gs_IRCreateIrremark->c_ren_line_number3:gs_IRCreateIrremarkInd->ind_ren_line_number3,
+:gs_IRCreateIrremark->c_oth_line_number3:gs_IRCreateIrremarkInd->ind_oth_line_number3,
+:gs_IRCreateIrremark->c_udi_line_number3:gs_IRCreateIrremarkInd->ind_udi_line_number3,
+:gs_IRCreateIrremark->c_line_number4:gs_IRCreateIrremarkInd->ind_line_number4,
+:gs_IRCreateIrremark->c_pax_id4:gs_IRCreateIrremarkInd->ind_pax_id4,
+:gs_IRCreateIrremark->c_type4:gs_IRCreateIrremarkInd->ind_type4,
+:remark4:gs_IRCreateIrremarkInd->ind_remark4,
+:gs_IRCreateIrremark->c_itin_type4:gs_IRCreateIrremarkInd->ind_itin_type4,
+:gs_IRCreateIrremark->c_tra_line_number4:gs_IRCreateIrremarkInd->ind_tra_line_number4,
+:gs_IRCreateIrremark->c_ren_line_number4:gs_IRCreateIrremarkInd->ind_ren_line_number4,
+:gs_IRCreateIrremark->c_oth_line_number4:gs_IRCreateIrremarkInd->ind_oth_line_number4,
+:gs_IRCreateIrremark->c_udi_line_number4:gs_IRCreateIrremarkInd->ind_udi_line_number4,
+:gs_IRCreateIrremark->c_line_number5:gs_IRCreateIrremarkInd->ind_line_number5,
+:gs_IRCreateIrremark->c_pax_id5:gs_IRCreateIrremarkInd->ind_pax_id5,
+:gs_IRCreateIrremark->c_type5:gs_IRCreateIrremarkInd->ind_type5,
+:remark5:gs_IRCreateIrremarkInd->ind_remark5,
+:gs_IRCreateIrremark->c_itin_type5:gs_IRCreateIrremarkInd->ind_itin_type5,
+:gs_IRCreateIrremark->c_tra_line_number5:gs_IRCreateIrremarkInd->ind_tra_line_number5,
+:gs_IRCreateIrremark->c_ren_line_number5:gs_IRCreateIrremarkInd->ind_ren_line_number5,
+:gs_IRCreateIrremark->c_oth_line_number5:gs_IRCreateIrremarkInd->ind_oth_line_number5,
+:gs_IRCreateIrremark->c_udi_line_number5:gs_IRCreateIrremarkInd->ind_udi_line_number5,
+:gs_IRCreateIrremark->c_line_number6:gs_IRCreateIrremarkInd->ind_line_number6,
+:gs_IRCreateIrremark->c_pax_id6:gs_IRCreateIrremarkInd->ind_pax_id6,
+:gs_IRCreateIrremark->c_type6:gs_IRCreateIrremarkInd->ind_type6,
+:remark6:gs_IRCreateIrremarkInd->ind_remark6,
+:gs_IRCreateIrremark->c_itin_type6:gs_IRCreateIrremarkInd->ind_itin_type6,
+:gs_IRCreateIrremark->c_tra_line_number6:gs_IRCreateIrremarkInd->ind_tra_line_number6,
+:gs_IRCreateIrremark->c_ren_line_number6:gs_IRCreateIrremarkInd->ind_ren_line_number6,
+:gs_IRCreateIrremark->c_oth_line_number6:gs_IRCreateIrremarkInd->ind_oth_line_number6,
+:gs_IRCreateIrremark->c_udi_line_number6:gs_IRCreateIrremarkInd->ind_udi_line_number6,
+:gs_IRCreateIrremark->c_line_number7:gs_IRCreateIrremarkInd->ind_line_number7,
+:gs_IRCreateIrremark->c_pax_id7:gs_IRCreateIrremarkInd->ind_pax_id7,
+:gs_IRCreateIrremark->c_type7:gs_IRCreateIrremarkInd->ind_type7,
+:remark7:gs_IRCreateIrremarkInd->ind_remark7,
+:gs_IRCreateIrremark->c_itin_type7:gs_IRCreateIrremarkInd->ind_itin_type7,
+:gs_IRCreateIrremark->c_tra_line_number7:gs_IRCreateIrremarkInd->ind_tra_line_number7,
+:gs_IRCreateIrremark->c_ren_line_number7:gs_IRCreateIrremarkInd->ind_ren_line_number7,
+:gs_IRCreateIrremark->c_oth_line_number7:gs_IRCreateIrremarkInd->ind_oth_line_number7,
+:gs_IRCreateIrremark->c_udi_line_number7:gs_IRCreateIrremarkInd->ind_udi_line_number7,
+:gs_IRCreateIrremark->c_line_number8:gs_IRCreateIrremarkInd->ind_line_number8,
+:gs_IRCreateIrremark->c_pax_id8:gs_IRCreateIrremarkInd->ind_pax_id8,
+:gs_IRCreateIrremark->c_type8:gs_IRCreateIrremarkInd->ind_type8,
+:remark8:gs_IRCreateIrremarkInd->ind_remark8,
+:gs_IRCreateIrremark->c_itin_type8:gs_IRCreateIrremarkInd->ind_itin_type8,
+:gs_IRCreateIrremark->c_tra_line_number8:gs_IRCreateIrremarkInd->ind_tra_line_number8,
+:gs_IRCreateIrremark->c_ren_line_number8:gs_IRCreateIrremarkInd->ind_ren_line_number8,
+:gs_IRCreateIrremark->c_oth_line_number8:gs_IRCreateIrremarkInd->ind_oth_line_number8,
+:gs_IRCreateIrremark->c_udi_line_number8:gs_IRCreateIrremarkInd->ind_udi_line_number8,
+:gs_IRCreateIrremark->c_line_number9:gs_IRCreateIrremarkInd->ind_line_number9,
+:gs_IRCreateIrremark->c_pax_id9:gs_IRCreateIrremarkInd->ind_pax_id9,
+:gs_IRCreateIrremark->c_type9:gs_IRCreateIrremarkInd->ind_type9,
+:remark9:gs_IRCreateIrremarkInd->ind_remark9,
+:gs_IRCreateIrremark->c_itin_type9:gs_IRCreateIrremarkInd->ind_itin_type9,
+:gs_IRCreateIrremark->c_tra_line_number9:gs_IRCreateIrremarkInd->ind_tra_line_number9,
+:gs_IRCreateIrremark->c_ren_line_number9:gs_IRCreateIrremarkInd->ind_ren_line_number9,
+:gs_IRCreateIrremark->c_oth_line_number9:gs_IRCreateIrremarkInd->ind_oth_line_number9,
+:gs_IRCreateIrremark->c_udi_line_number9:gs_IRCreateIrremarkInd->ind_udi_line_number9,
+:gs_IRCreateIrremark->c_line_number0:gs_IRCreateIrremarkInd->ind_line_number0,
+:gs_IRCreateIrremark->c_pax_id0:gs_IRCreateIrremarkInd->ind_pax_id0,
+:gs_IRCreateIrremark->c_type0:gs_IRCreateIrremarkInd->ind_type0,
+:remark0:gs_IRCreateIrremarkInd->ind_remark0,
+:gs_IRCreateIrremark->c_itin_type0:gs_IRCreateIrremarkInd->ind_itin_type0,
+:gs_IRCreateIrremark->c_tra_line_number0:gs_IRCreateIrremarkInd->ind_tra_line_number0,
+:gs_IRCreateIrremark->c_ren_line_number0:gs_IRCreateIrremarkInd->ind_ren_line_number0,
+:gs_IRCreateIrremark->c_oth_line_number0:gs_IRCreateIrremarkInd->ind_oth_line_number0,
+:gs_IRCreateIrremark->c_udi_line_number0:gs_IRCreateIrremarkInd->ind_udi_line_number0,
+:gs_IRCreateIrremark->c_pi_sqlcode:gs_IRCreateIrremarkInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrremark");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrremark function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrtransport *gs_IRCreateIrtransport;
+				SCIRCreateIrtransportInd *gs_IRCreateIrtransportInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrtransport (SCIRCreateIrtransport *ps_IRCreateIrtransport,
+			SCIRCreateIrtransportInd *ps_IRCreateIrtransportInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *start_time;
+		char *orig_cityname;
+		char *cog_dep_time;
+		char *cog_dep_term;
+		char *cog_of_miles;
+		char *end_time;
+		char *dest_cityname;
+		char *service;
+		char *reference;
+		char *chg_of_gauge;
+		char *no_of_stops;
+		char *dep_terminal;
+		char *arr_terminal;
+		char *airline_locator;
+		char *carrier_type;
+		char *meal;
+		char *aff_carrier;
+		char *start_time1;
+		char *orig_cityname1;
+		char *cog_dep_time1;
+		char *cog_dep_term1;
+		char *cog_of_miles1;
+		char *end_time1;
+		char *dest_cityname1;
+		char *service1;
+		char *reference1;
+		char *chg_of_gauge1;
+		char *no_of_stops1;
+		char *dep_terminal1;
+		char *arr_terminal1;
+		char *airline_locator1;
+		char *carrier_type1;
+		char *meal1;
+		char *aff_carrier1;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrtransport = ps_IRCreateIrtransport;
+			gs_IRCreateIrtransportInd = ps_IRCreateIrtransportInd;
+
+			start_time = gs_IRCreateIrtransport->c_start_time;
+			orig_cityname = gs_IRCreateIrtransport->c_orig_cityname;
+			cog_dep_time = gs_IRCreateIrtransport->c_cog_dep_time;
+			cog_dep_term = gs_IRCreateIrtransport->c_cog_dep_term;
+			cog_of_miles = gs_IRCreateIrtransport->c_cog_of_miles;
+			end_time = gs_IRCreateIrtransport->c_end_time;
+			dest_cityname = gs_IRCreateIrtransport->c_dest_cityname;
+			service = gs_IRCreateIrtransport->c_service;
+			reference = gs_IRCreateIrtransport->c_reference;
+			chg_of_gauge = gs_IRCreateIrtransport->c_chg_of_gauge;
+			no_of_stops = gs_IRCreateIrtransport->c_no_of_stops;
+			dep_terminal = gs_IRCreateIrtransport->c_dep_terminal;
+			arr_terminal = gs_IRCreateIrtransport->c_arr_terminal;
+			airline_locator = gs_IRCreateIrtransport->c_airline_locator;
+			carrier_type = gs_IRCreateIrtransport->c_carrier_type;
+			meal = gs_IRCreateIrtransport->c_meal;
+			aff_carrier = gs_IRCreateIrtransport->c_aff_carrier;
+			start_time1 = gs_IRCreateIrtransport->c_start_time1;
+			orig_cityname1 = gs_IRCreateIrtransport->c_orig_cityname1;
+			cog_dep_time1 = gs_IRCreateIrtransport->c_cog_dep_time1;
+			cog_dep_term1 = gs_IRCreateIrtransport->c_cog_dep_term1;
+			cog_of_miles1 = gs_IRCreateIrtransport->c_cog_of_miles1;
+			end_time1 = gs_IRCreateIrtransport->c_end_time1;
+			dest_cityname1 = gs_IRCreateIrtransport->c_dest_cityname1;
+			service1 = gs_IRCreateIrtransport->c_service1;
+			reference1 = gs_IRCreateIrtransport->c_reference1;
+			chg_of_gauge1 = gs_IRCreateIrtransport->c_chg_of_gauge1;
+			no_of_stops1 = gs_IRCreateIrtransport->c_no_of_stops1;
+			dep_terminal1 = gs_IRCreateIrtransport->c_dep_terminal1;
+			arr_terminal1 = gs_IRCreateIrtransport->c_arr_terminal1;
+			airline_locator1 = gs_IRCreateIrtransport->c_airline_locator1;
+			carrier_type1 = gs_IRCreateIrtransport->c_carrier_type1;
+			meal1 = gs_IRCreateIrtransport->c_meal1;
+			aff_carrier1 = gs_IRCreateIrtransport->c_aff_carrier1;
+
+			EXEC SQL EXEC
+			SP_IR__createIrtransport
+:gs_IRCreateIrtransport->c_session_id:gs_IRCreateIrtransportInd->ind_session_id,
+:gs_IRCreateIrtransport->c_itin_type:gs_IRCreateIrtransportInd->ind_itin_type,
+:gs_IRCreateIrtransport->c_line_number:gs_IRCreateIrtransportInd->ind_line_number,
+:gs_IRCreateIrtransport->c_start_date:gs_IRCreateIrtransportInd->ind_start_date,
+:start_time:gs_IRCreateIrtransportInd->ind_start_time,
+:gs_IRCreateIrtransport->c_orig_city_id:gs_IRCreateIrtransportInd->ind_orig_city_id,
+:orig_cityname:gs_IRCreateIrtransportInd->ind_orig_cityname,
+:gs_IRCreateIrtransport->c_cog_dep_city:gs_IRCreateIrtransportInd->ind_cog_dep_city,
+:gs_IRCreateIrtransport->c_cog_dep_date:gs_IRCreateIrtransportInd->ind_cog_dep_date,
+:cog_dep_time:gs_IRCreateIrtransportInd->ind_cog_dep_time,
+:cog_dep_term:gs_IRCreateIrtransportInd->ind_cog_dep_term,
+:gs_IRCreateIrtransport->c_cog_dep_gate:gs_IRCreateIrtransportInd->ind_cog_dep_gate,
+:cog_of_miles:gs_IRCreateIrtransportInd->ind_cog_of_miles,
+:gs_IRCreateIrtransport->c_end_date:gs_IRCreateIrtransportInd->ind_end_date,
+:end_time:gs_IRCreateIrtransportInd->ind_end_time,
+:gs_IRCreateIrtransport->c_dest_city_id:gs_IRCreateIrtransportInd->ind_dest_city_id,
+:dest_cityname:gs_IRCreateIrtransportInd->ind_dest_cityname,
+:gs_IRCreateIrtransport->c_classofservice:gs_IRCreateIrtransportInd->ind_classofservice,
+:service:gs_IRCreateIrtransportInd->ind_service,
+:gs_IRCreateIrtransport->c_sup_id:gs_IRCreateIrtransportInd->ind_sup_id,
+:reference:gs_IRCreateIrtransportInd->ind_reference,
+:chg_of_gauge:gs_IRCreateIrtransportInd->ind_chg_of_gauge,
+:no_of_stops:gs_IRCreateIrtransportInd->ind_no_of_stops,
+:dep_terminal:gs_IRCreateIrtransportInd->ind_dep_terminal,
+:gs_IRCreateIrtransport->c_dep_gate:gs_IRCreateIrtransportInd->ind_dep_gate,
+:gs_IRCreateIrtransport->c_report_time:gs_IRCreateIrtransportInd->ind_report_time,
+:gs_IRCreateIrtransport->c_arr_gate:gs_IRCreateIrtransportInd->ind_arr_gate,
+:arr_terminal:gs_IRCreateIrtransportInd->ind_arr_terminal,
+:airline_locator:gs_IRCreateIrtransportInd->ind_airline_locator,
+:carrier_type:gs_IRCreateIrtransportInd->ind_carrier_type,
+:meal:gs_IRCreateIrtransportInd->ind_meal,
+:aff_carrier:gs_IRCreateIrtransportInd->ind_aff_carrier,
+:gs_IRCreateIrtransport->c_actual_miles:gs_IRCreateIrtransportInd->ind_actual_miles,
+:gs_IRCreateIrtransport->c_arrival_ind:gs_IRCreateIrtransportInd->ind_arrival_ind,
+:gs_IRCreateIrtransport->c_elapsed_time:gs_IRCreateIrtransportInd->ind_elapsed_time,
+:gs_IRCreateIrtransport->c_itin_type1:gs_IRCreateIrtransportInd->ind_itin_type1,
+:gs_IRCreateIrtransport->c_line_number1:gs_IRCreateIrtransportInd->ind_line_number1,
+:gs_IRCreateIrtransport->c_start_date1:gs_IRCreateIrtransportInd->ind_start_date1,
+:start_time1:gs_IRCreateIrtransportInd->ind_start_time1,
+:gs_IRCreateIrtransport->c_orig_city_id1:gs_IRCreateIrtransportInd->ind_orig_city_id1,
+:orig_cityname1:gs_IRCreateIrtransportInd->ind_orig_cityname1,
+:gs_IRCreateIrtransport->c_cog_dep_city1:gs_IRCreateIrtransportInd->ind_cog_dep_city1,
+:gs_IRCreateIrtransport->c_cog_dep_date1:gs_IRCreateIrtransportInd->ind_cog_dep_date1,
+:cog_dep_time1:gs_IRCreateIrtransportInd->ind_cog_dep_time1,
+:cog_dep_term1:gs_IRCreateIrtransportInd->ind_cog_dep_term1,
+:gs_IRCreateIrtransport->c_cog_dep_gate1:gs_IRCreateIrtransportInd->ind_cog_dep_gate1,
+:cog_of_miles1:gs_IRCreateIrtransportInd->ind_cog_of_miles1,
+:gs_IRCreateIrtransport->c_end_date1:gs_IRCreateIrtransportInd->ind_end_date1,
+:end_time1:gs_IRCreateIrtransportInd->ind_end_time1,
+:gs_IRCreateIrtransport->c_dest_city_id1:gs_IRCreateIrtransportInd->ind_dest_city_id1,
+:dest_cityname1:gs_IRCreateIrtransportInd->ind_dest_cityname1,
+:gs_IRCreateIrtransport->c_classofservice1:gs_IRCreateIrtransportInd->ind_classofservice1,
+:service1:gs_IRCreateIrtransportInd->ind_service1,
+:gs_IRCreateIrtransport->c_sup_id1:gs_IRCreateIrtransportInd->ind_sup_id1,
+:reference1:gs_IRCreateIrtransportInd->ind_reference1,
+:chg_of_gauge1:gs_IRCreateIrtransportInd->ind_chg_of_gauge1,
+:no_of_stops1:gs_IRCreateIrtransportInd->ind_no_of_stops1,
+:dep_terminal1:gs_IRCreateIrtransportInd->ind_dep_terminal1,
+:gs_IRCreateIrtransport->c_dep_gate1:gs_IRCreateIrtransportInd->ind_dep_gate1,
+:gs_IRCreateIrtransport->c_report_time1:gs_IRCreateIrtransportInd->ind_report_time1,
+:gs_IRCreateIrtransport->c_arr_gate1:gs_IRCreateIrtransportInd->ind_arr_gate1,
+:arr_terminal1:gs_IRCreateIrtransportInd->ind_arr_terminal1,
+:airline_locator1:gs_IRCreateIrtransportInd->ind_airline_locator1,
+:carrier_type1:gs_IRCreateIrtransportInd->ind_carrier_type1,
+:meal1:gs_IRCreateIrtransportInd->ind_meal1,
+:aff_carrier1:gs_IRCreateIrtransportInd->ind_aff_carrier1,
+:gs_IRCreateIrtransport->c_actual_miles1:gs_IRCreateIrtransportInd->ind_actual_miles1,
+:gs_IRCreateIrtransport->c_arrival_ind1:gs_IRCreateIrtransportInd->ind_arrival_ind1,
+:gs_IRCreateIrtransport->c_elapsed_time1:gs_IRCreateIrtransportInd->ind_elapsed_time1,
+:gs_IRCreateIrtransport->c_pi_sqlcode:gs_IRCreateIrtransportInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrtransport");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrtransport function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrconsumdetail *gs_IRCreateIrconsumdetail;
+				SCIRCreateIrconsumdetailInd *gs_IRCreateIrconsumdetailInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrconsumdetail (SCIRCreateIrconsumdetail *ps_IRCreateIrconsumdetail,
+			SCIRCreateIrconsumdetailInd *ps_IRCreateIrconsumdetailInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *seat1;
+		char *fare_basis1;
+		char *tkt_desig1;
+		char *special_meal1;
+		char *special_need1;
+		char *cur_id1;
+		char *seat2;
+		char *fare_basis2;
+		char *tkt_desig2;
+		char *special_meal2;
+		char *special_need2;
+		char *cur_id2;
+		char *seat3;
+		char *fare_basis3;
+		char *tkt_desig3;
+		char *special_meal3;
+		char *special_need3;
+		char *cur_id3;
+		char *seat4;
+		char *fare_basis4;
+		char *tkt_desig4;
+		char *special_meal4;
+		char *special_need4;
+		char *cur_id4;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrconsumdetail = ps_IRCreateIrconsumdetail;
+			gs_IRCreateIrconsumdetailInd = ps_IRCreateIrconsumdetailInd;
+
+			seat1 = gs_IRCreateIrconsumdetail->c_seat1;
+			fare_basis1 = gs_IRCreateIrconsumdetail->c_fare_basis1;
+			tkt_desig1 = gs_IRCreateIrconsumdetail->c_tkt_desig1;
+			special_meal1 = gs_IRCreateIrconsumdetail->c_special_meal1;
+			special_need1 = gs_IRCreateIrconsumdetail->c_special_need1;
+			cur_id1 = gs_IRCreateIrconsumdetail->c_cur_id1;
+			seat2 = gs_IRCreateIrconsumdetail->c_seat2;
+			fare_basis2 = gs_IRCreateIrconsumdetail->c_fare_basis2;
+			tkt_desig2 = gs_IRCreateIrconsumdetail->c_tkt_desig2;
+			special_meal2 = gs_IRCreateIrconsumdetail->c_special_meal2;
+			special_need2 = gs_IRCreateIrconsumdetail->c_special_need2;
+			cur_id2 = gs_IRCreateIrconsumdetail->c_cur_id2;
+			seat3 = gs_IRCreateIrconsumdetail->c_seat3;
+			fare_basis3 = gs_IRCreateIrconsumdetail->c_fare_basis3;
+			tkt_desig3 = gs_IRCreateIrconsumdetail->c_tkt_desig3;
+			special_meal3 = gs_IRCreateIrconsumdetail->c_special_meal3;
+			special_need3 = gs_IRCreateIrconsumdetail->c_special_need3;
+			cur_id3 = gs_IRCreateIrconsumdetail->c_cur_id3;
+			seat4 = gs_IRCreateIrconsumdetail->c_seat4;
+			fare_basis4 = gs_IRCreateIrconsumdetail->c_fare_basis4;
+			tkt_desig4 = gs_IRCreateIrconsumdetail->c_tkt_desig4;
+			special_meal4 = gs_IRCreateIrconsumdetail->c_special_meal4;
+			special_need4 = gs_IRCreateIrconsumdetail->c_special_need4;
+			cur_id4 = gs_IRCreateIrconsumdetail->c_cur_id4;
+
+			EXEC SQL EXEC
+			SP_IR__createIrconsumdetail
+:gs_IRCreateIrconsumdetail->c_session_id:gs_IRCreateIrconsumdetailInd->ind_session_id,
+:gs_IRCreateIrconsumdetail->c_pax_id1:gs_IRCreateIrconsumdetailInd->ind_pax_id1,
+:gs_IRCreateIrconsumdetail->c_itin_type1:gs_IRCreateIrconsumdetailInd->ind_itin_type1,
+:gs_IRCreateIrconsumdetail->c_itin_line_number1:gs_IRCreateIrconsumdetailInd->ind_itin_line_number1,
+:gs_IRCreateIrconsumdetail->c_line_number1:gs_IRCreateIrconsumdetailInd->ind_line_number1,
+:seat1:gs_IRCreateIrconsumdetailInd->ind_seat1,
+:gs_IRCreateIrconsumdetail->c_connection1:gs_IRCreateIrconsumdetailInd->ind_connection1,
+:gs_IRCreateIrconsumdetail->c_smoking1:gs_IRCreateIrconsumdetailInd->ind_smoking1,
+:gs_IRCreateIrconsumdetail->c_fare_by_leg1:gs_IRCreateIrconsumdetailInd->ind_fare_by_leg1,
+:fare_basis1:gs_IRCreateIrconsumdetailInd->ind_fare_basis1,
+:tkt_desig1:gs_IRCreateIrconsumdetailInd->ind_tkt_desig1,
+:gs_IRCreateIrconsumdetail->c_cog_seat1:gs_IRCreateIrconsumdetailInd->ind_cog_seat1,
+:gs_IRCreateIrconsumdetail->c_service_status1:gs_IRCreateIrconsumdetailInd->ind_service_status1,
+:gs_IRCreateIrconsumdetail->c_ftp_miles1:gs_IRCreateIrconsumdetailInd->ind_ftp_miles1,
+:gs_IRCreateIrconsumdetail->c_boarding_pass1:gs_IRCreateIrconsumdetailInd->ind_boarding_pass1,
+:special_meal1:gs_IRCreateIrconsumdetailInd->ind_special_meal1,
+:special_need1:gs_IRCreateIrconsumdetailInd->ind_special_need1,
+:gs_IRCreateIrconsumdetail->c_baggage1:gs_IRCreateIrconsumdetailInd->ind_baggage1,
+:gs_IRCreateIrconsumdetail->c_crs_priced1:gs_IRCreateIrconsumdetailInd->ind_crs_priced1,
+:gs_IRCreateIrconsumdetail->c_cur_id1:gs_IRCreateIrconsumdetailInd->ind_cur_id1,
+:gs_IRCreateIrconsumdetail->c_pax_id2:gs_IRCreateIrconsumdetailInd->ind_pax_id2,
+:gs_IRCreateIrconsumdetail->c_itin_type2:gs_IRCreateIrconsumdetailInd->ind_itin_type2,
+:gs_IRCreateIrconsumdetail->c_itin_line_number2:gs_IRCreateIrconsumdetailInd->ind_itin_line_number2,
+:gs_IRCreateIrconsumdetail->c_line_number2:gs_IRCreateIrconsumdetailInd->ind_line_number2,
+:seat2:gs_IRCreateIrconsumdetailInd->ind_seat2,
+:gs_IRCreateIrconsumdetail->c_connection2:gs_IRCreateIrconsumdetailInd->ind_connection2,
+:gs_IRCreateIrconsumdetail->c_smoking2:gs_IRCreateIrconsumdetailInd->ind_smoking2,
+:gs_IRCreateIrconsumdetail->c_fare_by_leg2:gs_IRCreateIrconsumdetailInd->ind_fare_by_leg2,
+:fare_basis2:gs_IRCreateIrconsumdetailInd->ind_fare_basis2,
+:tkt_desig2:gs_IRCreateIrconsumdetailInd->ind_tkt_desig2,
+:gs_IRCreateIrconsumdetail->c_cog_seat2:gs_IRCreateIrconsumdetailInd->ind_cog_seat2,
+:gs_IRCreateIrconsumdetail->c_service_status2:gs_IRCreateIrconsumdetailInd->ind_service_status2,
+:gs_IRCreateIrconsumdetail->c_ftp_miles2:gs_IRCreateIrconsumdetailInd->ind_ftp_miles2,
+:gs_IRCreateIrconsumdetail->c_boarding_pass2:gs_IRCreateIrconsumdetailInd->ind_boarding_pass2,
+:special_meal2:gs_IRCreateIrconsumdetailInd->ind_special_meal2,
+:special_need2:gs_IRCreateIrconsumdetailInd->ind_special_need2,
+:gs_IRCreateIrconsumdetail->c_baggage2:gs_IRCreateIrconsumdetailInd->ind_baggage2,
+:gs_IRCreateIrconsumdetail->c_crs_priced2:gs_IRCreateIrconsumdetailInd->ind_crs_priced2,
+:gs_IRCreateIrconsumdetail->c_cur_id2:gs_IRCreateIrconsumdetailInd->ind_cur_id2,
+:gs_IRCreateIrconsumdetail->c_pax_id3:gs_IRCreateIrconsumdetailInd->ind_pax_id3,
+:gs_IRCreateIrconsumdetail->c_itin_type3:gs_IRCreateIrconsumdetailInd->ind_itin_type3,
+:gs_IRCreateIrconsumdetail->c_itin_line_number3:gs_IRCreateIrconsumdetailInd->ind_itin_line_number3,
+:gs_IRCreateIrconsumdetail->c_line_number3:gs_IRCreateIrconsumdetailInd->ind_line_number3,
+:seat3:gs_IRCreateIrconsumdetailInd->ind_seat3,
+:gs_IRCreateIrconsumdetail->c_connection3:gs_IRCreateIrconsumdetailInd->ind_connection3,
+:gs_IRCreateIrconsumdetail->c_smoking3:gs_IRCreateIrconsumdetailInd->ind_smoking3,
+:gs_IRCreateIrconsumdetail->c_fare_by_leg3:gs_IRCreateIrconsumdetailInd->ind_fare_by_leg3,
+:fare_basis3:gs_IRCreateIrconsumdetailInd->ind_fare_basis3,
+:tkt_desig3:gs_IRCreateIrconsumdetailInd->ind_tkt_desig3,
+:gs_IRCreateIrconsumdetail->c_cog_seat3:gs_IRCreateIrconsumdetailInd->ind_cog_seat3,
+:gs_IRCreateIrconsumdetail->c_service_status3:gs_IRCreateIrconsumdetailInd->ind_service_status3,
+:gs_IRCreateIrconsumdetail->c_ftp_miles3:gs_IRCreateIrconsumdetailInd->ind_ftp_miles3,
+:gs_IRCreateIrconsumdetail->c_boarding_pass3:gs_IRCreateIrconsumdetailInd->ind_boarding_pass3,
+:special_meal3:gs_IRCreateIrconsumdetailInd->ind_special_meal3,
+:special_need3:gs_IRCreateIrconsumdetailInd->ind_special_need3,
+:gs_IRCreateIrconsumdetail->c_baggage3:gs_IRCreateIrconsumdetailInd->ind_baggage3,
+:gs_IRCreateIrconsumdetail->c_crs_priced3:gs_IRCreateIrconsumdetailInd->ind_crs_priced3,
+:gs_IRCreateIrconsumdetail->c_cur_id3:gs_IRCreateIrconsumdetailInd->ind_cur_id3,
+:gs_IRCreateIrconsumdetail->c_pax_id4:gs_IRCreateIrconsumdetailInd->ind_pax_id4,
+:gs_IRCreateIrconsumdetail->c_itin_type4:gs_IRCreateIrconsumdetailInd->ind_itin_type4,
+:gs_IRCreateIrconsumdetail->c_itin_line_number4:gs_IRCreateIrconsumdetailInd->ind_itin_line_number4,
+:gs_IRCreateIrconsumdetail->c_line_number4:gs_IRCreateIrconsumdetailInd->ind_line_number4,
+:seat4:gs_IRCreateIrconsumdetailInd->ind_seat4,
+:gs_IRCreateIrconsumdetail->c_connection4:gs_IRCreateIrconsumdetailInd->ind_connection4,
+:gs_IRCreateIrconsumdetail->c_smoking4:gs_IRCreateIrconsumdetailInd->ind_smoking4,
+:gs_IRCreateIrconsumdetail->c_fare_by_leg4:gs_IRCreateIrconsumdetailInd->ind_fare_by_leg4,
+:fare_basis4:gs_IRCreateIrconsumdetailInd->ind_fare_basis4,
+:tkt_desig4:gs_IRCreateIrconsumdetailInd->ind_tkt_desig4,
+:gs_IRCreateIrconsumdetail->c_cog_seat4:gs_IRCreateIrconsumdetailInd->ind_cog_seat4,
+:gs_IRCreateIrconsumdetail->c_service_status4:gs_IRCreateIrconsumdetailInd->ind_service_status4,
+:gs_IRCreateIrconsumdetail->c_ftp_miles4:gs_IRCreateIrconsumdetailInd->ind_ftp_miles4,
+:gs_IRCreateIrconsumdetail->c_boarding_pass4:gs_IRCreateIrconsumdetailInd->ind_boarding_pass4,
+:special_meal4:gs_IRCreateIrconsumdetailInd->ind_special_meal4,
+:special_need4:gs_IRCreateIrconsumdetailInd->ind_special_need4,
+:gs_IRCreateIrconsumdetail->c_baggage4:gs_IRCreateIrconsumdetailInd->ind_baggage4,
+:gs_IRCreateIrconsumdetail->c_crs_priced4:gs_IRCreateIrconsumdetailInd->ind_crs_priced4,
+:gs_IRCreateIrconsumdetail->c_cur_id4:gs_IRCreateIrconsumdetailInd->ind_cur_id4,
+:gs_IRCreateIrconsumdetail->c_pi_sqlcode:gs_IRCreateIrconsumdetailInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrconsumdetail");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrconsumdetail function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrtaxdetail *gs_IRCreateIrtaxdetail;
+				SCIRCreateIrtaxdetailInd *gs_IRCreateIrtaxdetailInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrtaxdetail (SCIRCreateIrtaxdetail *ps_IRCreateIrtaxdetail,
+			SCIRCreateIrtaxdetailInd *ps_IRCreateIrtaxdetailInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrtaxdetail = ps_IRCreateIrtaxdetail;
+			gs_IRCreateIrtaxdetailInd = ps_IRCreateIrtaxdetailInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__createIrtaxdetail
+:gs_IRCreateIrtaxdetail->c_session_id:gs_IRCreateIrtaxdetailInd->ind_session_id,
+:gs_IRCreateIrtaxdetail->c_pax_id1:gs_IRCreateIrtaxdetailInd->ind_pax_id1,
+:gs_IRCreateIrtaxdetail->c_line_number1:gs_IRCreateIrtaxdetailInd->ind_line_number1,
+:gs_IRCreateIrtaxdetail->c_tax_id1:gs_IRCreateIrtaxdetailInd->ind_tax_id1,
+:gs_IRCreateIrtaxdetail->c_tax_amount1:gs_IRCreateIrtaxdetailInd->ind_tax_amount1,
+:gs_IRCreateIrtaxdetail->c_tax_source1:gs_IRCreateIrtaxdetailInd->ind_tax_source1,
+:gs_IRCreateIrtaxdetail->c_city_id1:gs_IRCreateIrtaxdetailInd->ind_city_id1,
+:gs_IRCreateIrtaxdetail->c_pax_id2:gs_IRCreateIrtaxdetailInd->ind_pax_id2,
+:gs_IRCreateIrtaxdetail->c_line_number2:gs_IRCreateIrtaxdetailInd->ind_line_number2,
+:gs_IRCreateIrtaxdetail->c_tax_id2:gs_IRCreateIrtaxdetailInd->ind_tax_id2,
+:gs_IRCreateIrtaxdetail->c_tax_source2:gs_IRCreateIrtaxdetailInd->ind_tax_source2,
+:gs_IRCreateIrtaxdetail->c_city_id2:gs_IRCreateIrtaxdetailInd->ind_city_id2,
+:gs_IRCreateIrtaxdetail->c_tax_amount2:gs_IRCreateIrtaxdetailInd->ind_tax_amount2,
+:gs_IRCreateIrtaxdetail->c_pax_id3:gs_IRCreateIrtaxdetailInd->ind_pax_id3,
+:gs_IRCreateIrtaxdetail->c_line_number3:gs_IRCreateIrtaxdetailInd->ind_line_number3,
+:gs_IRCreateIrtaxdetail->c_tax_id3:gs_IRCreateIrtaxdetailInd->ind_tax_id3,
+:gs_IRCreateIrtaxdetail->c_tax_source3:gs_IRCreateIrtaxdetailInd->ind_tax_source3,
+:gs_IRCreateIrtaxdetail->c_city_id3:gs_IRCreateIrtaxdetailInd->ind_city_id3,
+:gs_IRCreateIrtaxdetail->c_tax_amount3:gs_IRCreateIrtaxdetailInd->ind_tax_amount3,
+:gs_IRCreateIrtaxdetail->c_pax_id4:gs_IRCreateIrtaxdetailInd->ind_pax_id4,
+:gs_IRCreateIrtaxdetail->c_line_number4:gs_IRCreateIrtaxdetailInd->ind_line_number4,
+:gs_IRCreateIrtaxdetail->c_tax_id4:gs_IRCreateIrtaxdetailInd->ind_tax_id4,
+:gs_IRCreateIrtaxdetail->c_tax_source4:gs_IRCreateIrtaxdetailInd->ind_tax_source4,
+:gs_IRCreateIrtaxdetail->c_city_id4:gs_IRCreateIrtaxdetailInd->ind_city_id4,
+:gs_IRCreateIrtaxdetail->c_tax_amount4:gs_IRCreateIrtaxdetailInd->ind_tax_amount4,
+:gs_IRCreateIrtaxdetail->c_pax_id5:gs_IRCreateIrtaxdetailInd->ind_pax_id5,
+:gs_IRCreateIrtaxdetail->c_line_number5:gs_IRCreateIrtaxdetailInd->ind_line_number5,
+:gs_IRCreateIrtaxdetail->c_tax_id5:gs_IRCreateIrtaxdetailInd->ind_tax_id5,
+:gs_IRCreateIrtaxdetail->c_tax_source5:gs_IRCreateIrtaxdetailInd->ind_tax_source5,
+:gs_IRCreateIrtaxdetail->c_city_id5:gs_IRCreateIrtaxdetailInd->ind_city_id5,
+:gs_IRCreateIrtaxdetail->c_tax_amount5:gs_IRCreateIrtaxdetailInd->ind_tax_amount5,
+:gs_IRCreateIrtaxdetail->c_pax_id6:gs_IRCreateIrtaxdetailInd->ind_pax_id6,
+:gs_IRCreateIrtaxdetail->c_line_number6:gs_IRCreateIrtaxdetailInd->ind_line_number6,
+:gs_IRCreateIrtaxdetail->c_tax_id6:gs_IRCreateIrtaxdetailInd->ind_tax_id6,
+:gs_IRCreateIrtaxdetail->c_tax_source6:gs_IRCreateIrtaxdetailInd->ind_tax_source6,
+:gs_IRCreateIrtaxdetail->c_city_id6:gs_IRCreateIrtaxdetailInd->ind_city_id6,
+:gs_IRCreateIrtaxdetail->c_tax_amount6:gs_IRCreateIrtaxdetailInd->ind_tax_amount6,
+:gs_IRCreateIrtaxdetail->c_pax_id7:gs_IRCreateIrtaxdetailInd->ind_pax_id7,
+:gs_IRCreateIrtaxdetail->c_line_number7:gs_IRCreateIrtaxdetailInd->ind_line_number7,
+:gs_IRCreateIrtaxdetail->c_tax_id7:gs_IRCreateIrtaxdetailInd->ind_tax_id7,
+:gs_IRCreateIrtaxdetail->c_tax_source7:gs_IRCreateIrtaxdetailInd->ind_tax_source7,
+:gs_IRCreateIrtaxdetail->c_city_id7:gs_IRCreateIrtaxdetailInd->ind_city_id7,
+:gs_IRCreateIrtaxdetail->c_tax_amount7:gs_IRCreateIrtaxdetailInd->ind_tax_amount7,
+:gs_IRCreateIrtaxdetail->c_pax_id8:gs_IRCreateIrtaxdetailInd->ind_pax_id8,
+:gs_IRCreateIrtaxdetail->c_line_number8:gs_IRCreateIrtaxdetailInd->ind_line_number8,
+:gs_IRCreateIrtaxdetail->c_tax_id8:gs_IRCreateIrtaxdetailInd->ind_tax_id8,
+:gs_IRCreateIrtaxdetail->c_tax_source8:gs_IRCreateIrtaxdetailInd->ind_tax_source8,
+:gs_IRCreateIrtaxdetail->c_city_id8:gs_IRCreateIrtaxdetailInd->ind_city_id8,
+:gs_IRCreateIrtaxdetail->c_tax_amount8:gs_IRCreateIrtaxdetailInd->ind_tax_amount8,
+:gs_IRCreateIrtaxdetail->c_pax_id9:gs_IRCreateIrtaxdetailInd->ind_pax_id9,
+:gs_IRCreateIrtaxdetail->c_line_number9:gs_IRCreateIrtaxdetailInd->ind_line_number9,
+:gs_IRCreateIrtaxdetail->c_tax_id9:gs_IRCreateIrtaxdetailInd->ind_tax_id9,
+:gs_IRCreateIrtaxdetail->c_tax_source9:gs_IRCreateIrtaxdetailInd->ind_tax_source9,
+:gs_IRCreateIrtaxdetail->c_city_id9:gs_IRCreateIrtaxdetailInd->ind_city_id9,
+:gs_IRCreateIrtaxdetail->c_tax_amount9:gs_IRCreateIrtaxdetailInd->ind_tax_amount9,
+:gs_IRCreateIrtaxdetail->c_pax_id0:gs_IRCreateIrtaxdetailInd->ind_pax_id0,
+:gs_IRCreateIrtaxdetail->c_line_number0:gs_IRCreateIrtaxdetailInd->ind_line_number0,
+:gs_IRCreateIrtaxdetail->c_tax_id0:gs_IRCreateIrtaxdetailInd->ind_tax_id0,
+:gs_IRCreateIrtaxdetail->c_tax_source0:gs_IRCreateIrtaxdetailInd->ind_tax_source0,
+:gs_IRCreateIrtaxdetail->c_city_id0:gs_IRCreateIrtaxdetailInd->ind_city_id0,
+:gs_IRCreateIrtaxdetail->c_tax_amount0:gs_IRCreateIrtaxdetailInd->ind_tax_amount0,
+:gs_IRCreateIrtaxdetail->c_pi_sqlcode:gs_IRCreateIrtaxdetailInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrtaxdetail");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrtaxdetail function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRLoadClientFile *gs_IRLoadClientFile;
+				SCIRLoadClientFileInd *gs_IRLoadClientFileInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRLoadClientFile (SCIRLoadClientFile *ps_IRLoadClientFile,
+			SCIRLoadClientFileInd *ps_IRLoadClientFileInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *reference;
+		char *cfa_id;
+		char *pc_fname;
+		char *pc_lname;
+		char *pv_rejectirSub;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRLoadClientFile = ps_IRLoadClientFile;
+			gs_IRLoadClientFileInd = ps_IRLoadClientFileInd;
+
+			reference = gs_IRLoadClientFile->c_reference;
+			cfa_id = gs_IRLoadClientFile->c_cfa_id;
+			pc_fname = gs_IRLoadClientFile->c_pc_fname;
+			pc_lname = gs_IRLoadClientFile->c_pc_lname;
+			pv_rejectirSub = gs_IRLoadClientFile->c_pv_rejectirSub;
+
+			EXEC SQL EXEC
+			SP_IR__loadClientFile
+:gs_IRLoadClientFile->c_pc_session_id:gs_IRLoadClientFileInd->ind_pc_session_id,
+:gs_IRLoadClientFile->c_pc_tran_id:gs_IRLoadClientFileInd->ind_pc_tran_id,
+:gs_IRLoadClientFile->c_pc_con_id:gs_IRLoadClientFileInd->ind_pc_con_id,
+:reference:gs_IRLoadClientFileInd->ind_reference,
+:cfa_id:gs_IRLoadClientFileInd->ind_cfa_id,
+:gs_IRLoadClientFile->c_mktg_list:gs_IRLoadClientFileInd->ind_mktg_list,
+:gs_IRLoadClientFile->c_gmt_date_time:gs_IRLoadClientFileInd->ind_gmt_date_time,
+:gs_IRLoadClientFile->c_pc_PNR_date:gs_IRLoadClientFileInd->ind_pc_PNR_date,
+:gs_IRLoadClientFile->c_iata_no:gs_IRLoadClientFileInd->ind_iata_no,
+:gs_IRLoadClientFile->c_pc_company:gs_IRLoadClientFileInd->ind_pc_company,
+:gs_IRLoadClientFile->c_pc_branch:gs_IRLoadClientFileInd->ind_pc_branch,
+:gs_IRLoadClientFile->c_pi_cfa_no:gs_IRLoadClientFileInd->ind_pi_cfa_no OUTPUT,
+:gs_IRLoadClientFile->c_pc_cfa_code:gs_IRLoadClientFileInd->ind_pc_cfa_code OUTPUT,
+:gs_IRLoadClientFile->c_pc_cfa_type:gs_IRLoadClientFileInd->ind_pc_cfa_type OUTPUT,
+:gs_IRLoadClientFile->c_pc_cfa_con:gs_IRLoadClientFileInd->ind_pc_cfa_con OUTPUT,
+:pc_fname:gs_IRLoadClientFileInd->ind_pc_fname OUTPUT,
+:pc_lname:gs_IRLoadClientFileInd->ind_pc_lname OUTPUT,
+:gs_IRLoadClientFile->c_pc_rejectCon:gs_IRLoadClientFileInd->ind_pc_rejectCon OUTPUT,
+:gs_IRLoadClientFile->c_pc_rejectCop:gs_IRLoadClientFileInd->ind_pc_rejectCop OUTPUT,
+:gs_IRLoadClientFile->c_pc_rejectBra:gs_IRLoadClientFileInd->ind_pc_rejectBra OUTPUT,
+:gs_IRLoadClientFile->c_pc_city:gs_IRLoadClientFileInd->ind_pc_city OUTPUT,
+:gs_IRLoadClientFile->c_pi_rejectirId:gs_IRLoadClientFileInd->ind_pi_rejectirId OUTPUT,
+:pv_rejectirSub:gs_IRLoadClientFileInd->ind_pv_rejectirSub OUTPUT,
+:gs_IRLoadClientFile->c_pi_sqlcode:gs_IRLoadClientFileInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__loadClientFile");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__loadClientFile function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRReject *gs_IRReject;
+				SCIRRejectInd *gs_IRRejectInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRReject (SCIRReject *ps_IRReject,
+			SCIRRejectInd *ps_IRRejectInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *reference;
+		char *description;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRReject = ps_IRReject;
+			gs_IRRejectInd = ps_IRRejectInd;
+
+			reference = gs_IRReject->c_reference;
+			description = gs_IRReject->c_description;
+
+			EXEC SQL EXEC
+			SP_IR__reject
+:gs_IRReject->c_pc_session_id:gs_IRRejectInd->ind_pc_session_id,
+:gs_IRReject->c_pc_rejectCop:gs_IRRejectInd->ind_pc_rejectCop,
+:gs_IRReject->c_pc_rejectBra:gs_IRRejectInd->ind_pc_rejectBra,
+:gs_IRReject->c_pc_rejectCon:gs_IRRejectInd->ind_pc_rejectCon,
+:reference:gs_IRRejectInd->ind_reference,
+:gs_IRReject->c_gmt_date_time:gs_IRRejectInd->ind_gmt_date_time,
+:gs_IRReject->c_iata_no:gs_IRRejectInd->ind_iata_no,
+:description:gs_IRRejectInd->ind_description,
+:gs_IRReject->c_queue_type:gs_IRRejectInd->ind_queue_type,
+:gs_IRReject->c_pi_sqlcode:gs_IRRejectInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__reject");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__reject function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRGetLocalDate *gs_IRGetLocalDate;
+				SCIRGetLocalDateInd *gs_IRGetLocalDateInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRGetLocalDate (SCIRGetLocalDate *ps_IRGetLocalDate,
+			SCIRGetLocalDateInd *ps_IRGetLocalDateInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRGetLocalDate = ps_IRGetLocalDate;
+			gs_IRGetLocalDateInd = ps_IRGetLocalDateInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__getLocalDate
+:gs_IRGetLocalDate->c_pc_copId:gs_IRGetLocalDateInd->ind_pc_copId,
+:gs_IRGetLocalDate->c_pc_braId:gs_IRGetLocalDateInd->ind_pc_braId,
+:gs_IRGetLocalDate->c_pc_iataNo:gs_IRGetLocalDateInd->ind_pc_iataNo,
+:gs_IRGetLocalDate->c_pc_cityId:gs_IRGetLocalDateInd->ind_pc_cityId,
+:gs_IRGetLocalDate->c_pd_gmtDateTime:gs_IRGetLocalDateInd->ind_pd_gmtDateTime OUTPUT,
+:gs_IRGetLocalDate->c_pd_lclDateTime:gs_IRGetLocalDateInd->ind_pd_lclDateTime OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__getLocalDate");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__getLocalDate function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrother *gs_IRCreateIrother;
+				SCIRCreateIrotherInd *gs_IRCreateIrotherInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrother (SCIRCreateIrother *ps_IRCreateIrother,
+			SCIRCreateIrotherInd *ps_IRCreateIrotherInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *start_time1;
+		char *end_time1;
+		char *reference1;
+		char *confirmation1;
+		char *saving_code1;
+		char *departure_point1;
+		char *arrival_point1;
+		char *svc_description1;
+		char *cabin_no1;
+		char *tour_no1;
+		char *start_time2;
+		char *end_time2;
+		char *reference2;
+		char *confirmation2;
+		char *saving_code2;
+		char *departure_point2;
+		char *arrival_point2;
+		char *svc_description2;
+		char *cabin_no2;
+		char *tour_no2;
+		char *start_time3;
+		char *end_time3;
+		char *reference3;
+		char *confirmation3;
+		char *saving_code3;
+		char *departure_point3;
+		char *arrival_point3;
+		char *svc_description3;
+		char *cabin_no3;
+		char *tour_no3;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrother = ps_IRCreateIrother;
+			gs_IRCreateIrotherInd = ps_IRCreateIrotherInd;
+
+			start_time1 = gs_IRCreateIrother->c_start_time1;
+			end_time1 = gs_IRCreateIrother->c_end_time1;
+			reference1 = gs_IRCreateIrother->c_reference1;
+			confirmation1 = gs_IRCreateIrother->c_confirmation1;
+			saving_code1 = gs_IRCreateIrother->c_saving_code1;
+			departure_point1 = gs_IRCreateIrother->c_departure_point1;
+			arrival_point1 = gs_IRCreateIrother->c_arrival_point1;
+			svc_description1 = gs_IRCreateIrother->c_svc_description1;
+			cabin_no1 = gs_IRCreateIrother->c_cabin_no1;
+			tour_no1 = gs_IRCreateIrother->c_tour_no1;
+			start_time2 = gs_IRCreateIrother->c_start_time2;
+			end_time2 = gs_IRCreateIrother->c_end_time2;
+			reference2 = gs_IRCreateIrother->c_reference2;
+			confirmation2 = gs_IRCreateIrother->c_confirmation2;
+			saving_code2 = gs_IRCreateIrother->c_saving_code2;
+			departure_point2 = gs_IRCreateIrother->c_departure_point2;
+			arrival_point2 = gs_IRCreateIrother->c_arrival_point2;
+			svc_description2 = gs_IRCreateIrother->c_svc_description2;
+			cabin_no2 = gs_IRCreateIrother->c_cabin_no2;
+			tour_no2 = gs_IRCreateIrother->c_tour_no2;
+			start_time3 = gs_IRCreateIrother->c_start_time3;
+			end_time3 = gs_IRCreateIrother->c_end_time3;
+			reference3 = gs_IRCreateIrother->c_reference3;
+			confirmation3 = gs_IRCreateIrother->c_confirmation3;
+			saving_code3 = gs_IRCreateIrother->c_saving_code3;
+			departure_point3 = gs_IRCreateIrother->c_departure_point3;
+			arrival_point3 = gs_IRCreateIrother->c_arrival_point3;
+			svc_description3 = gs_IRCreateIrother->c_svc_description3;
+			cabin_no3 = gs_IRCreateIrother->c_cabin_no3;
+			tour_no3 = gs_IRCreateIrother->c_tour_no3;
+
+			EXEC SQL EXEC
+			SP_IR__createIrother
+:gs_IRCreateIrother->c_session_id:gs_IRCreateIrotherInd->ind_session_id,
+:gs_IRCreateIrother->c_itin_type1:gs_IRCreateIrotherInd->ind_itin_type1,
+:gs_IRCreateIrother->c_line_number1:gs_IRCreateIrotherInd->ind_line_number1,
+:gs_IRCreateIrother->c_start_date1:gs_IRCreateIrotherInd->ind_start_date1,
+:start_time1:gs_IRCreateIrotherInd->ind_start_time1,
+:gs_IRCreateIrother->c_orig_city_id1:gs_IRCreateIrotherInd->ind_orig_city_id1,
+:gs_IRCreateIrother->c_end_date1:gs_IRCreateIrotherInd->ind_end_date1,
+:end_time1:gs_IRCreateIrotherInd->ind_end_time1,
+:gs_IRCreateIrother->c_dest_city_id1:gs_IRCreateIrotherInd->ind_dest_city_id1,
+:gs_IRCreateIrother->c_unit_type1:gs_IRCreateIrotherInd->ind_unit_type1,
+:gs_IRCreateIrother->c_unit_ct1:gs_IRCreateIrotherInd->ind_unit_ct1,
+:gs_IRCreateIrother->c_sup_id1:gs_IRCreateIrotherInd->ind_sup_id1,
+:reference1:gs_IRCreateIrotherInd->ind_reference1,
+:confirmation1:gs_IRCreateIrotherInd->ind_confirmation1,
+:saving_code1:gs_IRCreateIrotherInd->ind_saving_code1,
+:departure_point1:gs_IRCreateIrotherInd->ind_departure_point1,
+:arrival_point1:gs_IRCreateIrotherInd->ind_arrival_point1,
+:svc_description1:gs_IRCreateIrotherInd->ind_svc_description1,
+:cabin_no1:gs_IRCreateIrotherInd->ind_cabin_no1,
+:tour_no1:gs_IRCreateIrotherInd->ind_tour_no1,
+:gs_IRCreateIrother->c_itin_type2:gs_IRCreateIrotherInd->ind_itin_type2,
+:gs_IRCreateIrother->c_line_number2:gs_IRCreateIrotherInd->ind_line_number2,
+:gs_IRCreateIrother->c_start_date2:gs_IRCreateIrotherInd->ind_start_date2,
+:start_time2:gs_IRCreateIrotherInd->ind_start_time2,
+:gs_IRCreateIrother->c_orig_city_id2:gs_IRCreateIrotherInd->ind_orig_city_id2,
+:gs_IRCreateIrother->c_end_date2:gs_IRCreateIrotherInd->ind_end_date2,
+:end_time2:gs_IRCreateIrotherInd->ind_end_time2,
+:gs_IRCreateIrother->c_dest_city_id2:gs_IRCreateIrotherInd->ind_dest_city_id2,
+:gs_IRCreateIrother->c_unit_type2:gs_IRCreateIrotherInd->ind_unit_type2,
+:gs_IRCreateIrother->c_unit_ct2:gs_IRCreateIrotherInd->ind_unit_ct2,
+:gs_IRCreateIrother->c_sup_id2:gs_IRCreateIrotherInd->ind_sup_id2,
+:reference2:gs_IRCreateIrotherInd->ind_reference2,
+:confirmation2:gs_IRCreateIrotherInd->ind_confirmation2,
+:saving_code2:gs_IRCreateIrotherInd->ind_saving_code2,
+:departure_point2:gs_IRCreateIrotherInd->ind_departure_point2,
+:arrival_point2:gs_IRCreateIrotherInd->ind_arrival_point2,
+:svc_description2:gs_IRCreateIrotherInd->ind_svc_description2,
+:cabin_no2:gs_IRCreateIrotherInd->ind_cabin_no2,
+:tour_no2:gs_IRCreateIrotherInd->ind_tour_no2,
+:gs_IRCreateIrother->c_itin_type3:gs_IRCreateIrotherInd->ind_itin_type3,
+:gs_IRCreateIrother->c_line_number3:gs_IRCreateIrotherInd->ind_line_number3,
+:gs_IRCreateIrother->c_start_date3:gs_IRCreateIrotherInd->ind_start_date3,
+:start_time3:gs_IRCreateIrotherInd->ind_start_time3,
+:gs_IRCreateIrother->c_orig_city_id3:gs_IRCreateIrotherInd->ind_orig_city_id3,
+:gs_IRCreateIrother->c_end_date3:gs_IRCreateIrotherInd->ind_end_date3,
+:end_time3:gs_IRCreateIrotherInd->ind_end_time3,
+:gs_IRCreateIrother->c_dest_city_id3:gs_IRCreateIrotherInd->ind_dest_city_id3,
+:gs_IRCreateIrother->c_unit_type3:gs_IRCreateIrotherInd->ind_unit_type3,
+:gs_IRCreateIrother->c_unit_ct3:gs_IRCreateIrotherInd->ind_unit_ct3,
+:gs_IRCreateIrother->c_sup_id3:gs_IRCreateIrotherInd->ind_sup_id3,
+:reference3:gs_IRCreateIrotherInd->ind_reference3,
+:confirmation3:gs_IRCreateIrotherInd->ind_confirmation3,
+:saving_code3:gs_IRCreateIrotherInd->ind_saving_code3,
+:departure_point3:gs_IRCreateIrotherInd->ind_departure_point3,
+:arrival_point3:gs_IRCreateIrotherInd->ind_arrival_point3,
+:svc_description3:gs_IRCreateIrotherInd->ind_svc_description3,
+:cabin_no3:gs_IRCreateIrotherInd->ind_cabin_no3,
+:tour_no3:gs_IRCreateIrotherInd->ind_tour_no3,
+:gs_IRCreateIrother->c_pi_sqlcode:gs_IRCreateIrotherInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrother");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrother function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCleanupIrtransport *gs_IRCleanupIrtransport;
+				SCIRCleanupIrtransportInd *gs_IRCleanupIrtransportInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCleanupIrtransport (SCIRCleanupIrtransport *ps_IRCleanupIrtransport,
+			SCIRCleanupIrtransportInd *ps_IRCleanupIrtransportInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCleanupIrtransport = ps_IRCleanupIrtransport;
+			gs_IRCleanupIrtransportInd = ps_IRCleanupIrtransportInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__cleanupIrtransport
+:gs_IRCleanupIrtransport->c_session_id:gs_IRCleanupIrtransportInd->ind_session_id;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__cleanupIrtransport");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__cleanupIrtransport function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrrental *gs_IRCreateIrrental;
+				SCIRCreateIrrentalInd *gs_IRCreateIrrentalInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrrental (SCIRCreateIrrental *ps_IRCreateIrrental,
+			SCIRCreateIrrentalInd *ps_IRCreateIrrentalInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *start_time;
+		char *end_time;
+		char *unit_ct;
+		char *reason_code;
+		char *ex_day_charge;
+		char *ex_hr_charge;
+		char *ex_mile_charge;
+		char *free_mileage;
+		char *dropoff_charge;
+		char *regular_rate;
+		char *booked_rate;
+		char *local_rate;
+		char *rate_code;
+		char *rate_multip;
+		char *comm_rate;
+		char *saving_code;
+		char *location;
+		char *site_name;
+		char *addr1;
+		char *addr2;
+		char *addr3;
+		char *addr4;
+		char *phone_acode;
+		char *phone_no;
+		char *fax_acode;
+		char *fax_no;
+		char *guarantee;
+		char *confirmation;
+		char *corporate_disc;
+		char *corporation_id;
+		char *cancel_policy;
+		char *reference;
+		char *fup;
+		char *customer_id;
+		char *pickup_location;
+		char *dropoff_location;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrrental = ps_IRCreateIrrental;
+			gs_IRCreateIrrentalInd = ps_IRCreateIrrentalInd;
+
+			start_time = gs_IRCreateIrrental->c_start_time;
+			end_time = gs_IRCreateIrrental->c_end_time;
+			unit_ct = gs_IRCreateIrrental->c_unit_ct;
+			reason_code = gs_IRCreateIrrental->c_reason_code;
+			ex_day_charge = gs_IRCreateIrrental->c_ex_day_charge;
+			ex_hr_charge = gs_IRCreateIrrental->c_ex_hr_charge;
+			ex_mile_charge = gs_IRCreateIrrental->c_ex_mile_charge;
+			free_mileage = gs_IRCreateIrrental->c_free_mileage;
+			dropoff_charge = gs_IRCreateIrrental->c_dropoff_charge;
+			regular_rate = gs_IRCreateIrrental->c_regular_rate;
+			booked_rate = gs_IRCreateIrrental->c_booked_rate;
+			local_rate = gs_IRCreateIrrental->c_local_rate;
+			rate_code = gs_IRCreateIrrental->c_rate_code;
+			rate_multip = gs_IRCreateIrrental->c_rate_multip;
+			comm_rate = gs_IRCreateIrrental->c_comm_rate;
+			saving_code = gs_IRCreateIrrental->c_saving_code;
+			location = gs_IRCreateIrrental->c_location;
+			site_name = gs_IRCreateIrrental->c_site_name;
+			addr1 = gs_IRCreateIrrental->c_addr1;
+			addr2 = gs_IRCreateIrrental->c_addr2;
+			addr3 = gs_IRCreateIrrental->c_addr3;
+			addr4 = gs_IRCreateIrrental->c_addr4;
+			phone_acode = gs_IRCreateIrrental->c_phone_acode;
+			phone_no = gs_IRCreateIrrental->c_phone_no;
+			fax_acode = gs_IRCreateIrrental->c_fax_acode;
+			fax_no = gs_IRCreateIrrental->c_fax_no;
+			guarantee = gs_IRCreateIrrental->c_guarantee;
+			confirmation = gs_IRCreateIrrental->c_confirmation;
+			corporate_disc = gs_IRCreateIrrental->c_corporate_disc;
+			corporation_id = gs_IRCreateIrrental->c_corporation_id;
+			cancel_policy = gs_IRCreateIrrental->c_cancel_policy;
+			reference = gs_IRCreateIrrental->c_reference;
+			fup = gs_IRCreateIrrental->c_fup;
+			customer_id = gs_IRCreateIrrental->c_customer_id;
+			pickup_location = gs_IRCreateIrrental->c_pickup_location;
+			dropoff_location = gs_IRCreateIrrental->c_dropoff_location;
+
+			EXEC SQL EXEC
+			SP_IR__createIrrental
+:gs_IRCreateIrrental->c_session_id:gs_IRCreateIrrentalInd->ind_session_id,
+:gs_IRCreateIrrental->c_cop_id:gs_IRCreateIrrentalInd->ind_cop_id,
+:gs_IRCreateIrrental->c_itin_type:gs_IRCreateIrrentalInd->ind_itin_type,
+:gs_IRCreateIrrental->c_line_number:gs_IRCreateIrrentalInd->ind_line_number,
+:gs_IRCreateIrrental->c_start_date:gs_IRCreateIrrentalInd->ind_start_date,
+:start_time:gs_IRCreateIrrentalInd->ind_start_time,
+:gs_IRCreateIrrental->c_origin_city_id:gs_IRCreateIrrentalInd->ind_origin_city_id,
+:gs_IRCreateIrrental->c_end_date:gs_IRCreateIrrentalInd->ind_end_date,
+:end_time:gs_IRCreateIrrentalInd->ind_end_time,
+:gs_IRCreateIrrental->c_dest_city_id:gs_IRCreateIrrentalInd->ind_dest_city_id,
+:gs_IRCreateIrrental->c_unit_type:gs_IRCreateIrrentalInd->ind_unit_type,
+:unit_ct:gs_IRCreateIrrentalInd->ind_unit_ct,
+:gs_IRCreateIrrental->c_sup_id:gs_IRCreateIrrentalInd->ind_sup_id,
+:gs_IRCreateIrrental->c_source:gs_IRCreateIrrentalInd->ind_source,
+:gs_IRCreateIrrental->c_action_code:gs_IRCreateIrrentalInd->ind_action_code,
+:reason_code:gs_IRCreateIrrentalInd->ind_reason_code,
+:gs_IRCreateIrrental->c_crs_id:gs_IRCreateIrrentalInd->ind_crs_id,
+:gs_IRCreateIrrental->c_number_of_pax:gs_IRCreateIrrentalInd->ind_number_of_pax,
+:ex_day_charge:gs_IRCreateIrrentalInd->ind_ex_day_charge,
+:ex_hr_charge:gs_IRCreateIrrentalInd->ind_ex_hr_charge,
+:ex_mile_charge:gs_IRCreateIrrentalInd->ind_ex_mile_charge,
+:gs_IRCreateIrrental->c_free_mile_code:gs_IRCreateIrrentalInd->ind_free_mile_code,
+:free_mileage:gs_IRCreateIrrentalInd->ind_free_mileage,
+:dropoff_charge:gs_IRCreateIrrentalInd->ind_dropoff_charge,
+:regular_rate:gs_IRCreateIrrentalInd->ind_regular_rate,
+:booked_rate:gs_IRCreateIrrentalInd->ind_booked_rate,
+:local_rate:gs_IRCreateIrrentalInd->ind_local_rate,
+:gs_IRCreateIrrental->c_cur_id:gs_IRCreateIrrentalInd->ind_cur_id,
+:gs_IRCreateIrrental->c_rate_type:gs_IRCreateIrrentalInd->ind_rate_type,
+:rate_code:gs_IRCreateIrrentalInd->ind_rate_code,
+:gs_IRCreateIrrental->c_rate_duration:gs_IRCreateIrrentalInd->ind_rate_duration,
+:rate_multip:gs_IRCreateIrrentalInd->ind_rate_multip,
+:comm_rate:gs_IRCreateIrrentalInd->ind_comm_rate,
+:gs_IRCreateIrrental->c_multi_lvl_rate:gs_IRCreateIrrentalInd->ind_multi_lvl_rate,
+:saving_code:gs_IRCreateIrrentalInd->ind_saving_code,
+:location:gs_IRCreateIrrentalInd->ind_location,
+:gs_IRCreateIrrental->c_location_id:gs_IRCreateIrrentalInd->ind_location_id,
+:site_name:gs_IRCreateIrrentalInd->ind_site_name,
+:addr1:gs_IRCreateIrrentalInd->ind_addr1,
+:addr2:gs_IRCreateIrrentalInd->ind_addr2,
+:addr3:gs_IRCreateIrrentalInd->ind_addr3,
+:addr4:gs_IRCreateIrrentalInd->ind_addr4,
+:phone_acode:gs_IRCreateIrrentalInd->ind_phone_acode,
+:phone_no:gs_IRCreateIrrentalInd->ind_phone_no,
+:fax_acode:gs_IRCreateIrrentalInd->ind_fax_acode,
+:fax_no:gs_IRCreateIrrentalInd->ind_fax_no,
+:guarantee:gs_IRCreateIrrentalInd->ind_guarantee,
+:confirmation:gs_IRCreateIrrentalInd->ind_confirmation,
+:corporate_disc:gs_IRCreateIrrentalInd->ind_corporate_disc,
+:corporation_id:gs_IRCreateIrrentalInd->ind_corporation_id,
+:cancel_policy:gs_IRCreateIrrentalInd->ind_cancel_policy,
+:reference:gs_IRCreateIrrentalInd->ind_reference,
+:fup:gs_IRCreateIrrentalInd->ind_fup,
+:customer_id:gs_IRCreateIrrentalInd->ind_customer_id,
+:gs_IRCreateIrrental->c_harp_htlkey:gs_IRCreateIrrentalInd->ind_harp_htlkey,
+:gs_IRCreateIrrental->c_man_creation:gs_IRCreateIrrentalInd->ind_man_creation,
+:gs_IRCreateIrrental->c_pi_sqlcode:gs_IRCreateIrrentalInd->ind_pi_sqlcode OUTPUT,
+:pickup_location:gs_IRCreateIrrentalInd->ind_pickup_location,
+:dropoff_location:gs_IRCreateIrrentalInd->ind_dropoff_location,
+:gs_IRCreateIrrental->c_discount_code:gs_IRCreateIrrentalInd->ind_discount_code,
+:gs_IRCreateIrrental->c_commissionable:gs_IRCreateIrrentalInd->ind_commissionable,
+:gs_IRCreateIrrental->c_preferred:gs_IRCreateIrrentalInd->ind_preferred,
+:gs_IRCreateIrrental->c_service_status:gs_IRCreateIrrentalInd->ind_service_status,
+:gs_IRCreateIrrental->c_virtualCard_cc:gs_IRCreateIrrentalInd->ind_virtualCard_cc,
+:gs_IRCreateIrrental->c_virtualCard_exp_date:gs_IRCreateIrrentalInd->ind_virtualCard_exp_date,
+:gs_IRCreateIrrental->c_virtualCard_deployment:gs_IRCreateIrrentalInd->ind_virtualCard_deployment,
+:gs_IRCreateIrrental->c_virtualCard_card_usage_id:gs_IRCreateIrrentalInd->ind_virtualCard_card_usage_id,
+:gs_IRCreateIrrental->c_virtualCard_gross_value_ind:gs_IRCreateIrrentalInd->ind_virtualCard_gross_value_ind,
+:gs_IRCreateIrrental->c_pcc_cur_id:gs_IRCreateIrrentalInd->ind_pcc_cur_id;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrrental");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrrental function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrticket *gs_IRCreateIrticket;
+				SCIRCreateIrticketInd *gs_IRCreateIrticketInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrticket (SCIRCreateIrticket *ps_IRCreateIrticket,
+			SCIRCreateIrticketInd *ps_IRCreateIrticketInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *reason_code;
+		char *ticket_centre_reference;
+		char *grid_reference;
+		char *shop_reference;
+		char *reference1;
+		char *form1;
+		char *ticket_no1;
+		char *pic1;
+		char *orig_ticket_no1;
+		char *no_of_books1;
+		char *saving_code1;
+		char *sel_access1;
+		char *crs_tour1;
+		char *reference2;
+		char *form2;
+		char *ticket_no2;
+		char *pic2;
+		char *orig_ticket_no2;
+		char *no_of_books2;
+		char *saving_code2;
+		char *sel_access2;
+		char *crs_tour2;
+		char *reference3;
+		char *form3;
+		char *ticket_no3;
+		char *pic3;
+		char *orig_ticket_no3;
+		char *no_of_books3;
+		char *saving_code3;
+		char *sel_access3;
+		char *crs_tour3;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrticket = ps_IRCreateIrticket;
+			gs_IRCreateIrticketInd = ps_IRCreateIrticketInd;
+
+			reason_code = gs_IRCreateIrticket->c_reason_code;
+			ticket_centre_reference = gs_IRCreateIrticket->c_ticket_centre_reference;
+			grid_reference = gs_IRCreateIrticket->c_grid_reference;
+			shop_reference = gs_IRCreateIrticket->c_shop_reference;
+			reference1 = gs_IRCreateIrticket->c_reference1;
+			form1 = gs_IRCreateIrticket->c_form1;
+			ticket_no1 = gs_IRCreateIrticket->c_ticket_no1;
+			pic1 = gs_IRCreateIrticket->c_pic1;
+			orig_ticket_no1 = gs_IRCreateIrticket->c_orig_ticket_no1;
+			no_of_books1 = gs_IRCreateIrticket->c_no_of_books1;
+			saving_code1 = gs_IRCreateIrticket->c_saving_code1;
+			sel_access1 = gs_IRCreateIrticket->c_sel_access1;
+			crs_tour1 = gs_IRCreateIrticket->c_crs_tour1;
+			reference2 = gs_IRCreateIrticket->c_reference2;
+			form2 = gs_IRCreateIrticket->c_form2;
+			ticket_no2 = gs_IRCreateIrticket->c_ticket_no2;
+			pic2 = gs_IRCreateIrticket->c_pic2;
+			orig_ticket_no2 = gs_IRCreateIrticket->c_orig_ticket_no2;
+			no_of_books2 = gs_IRCreateIrticket->c_no_of_books2;
+			saving_code2 = gs_IRCreateIrticket->c_saving_code2;
+			sel_access2 = gs_IRCreateIrticket->c_sel_access2;
+			crs_tour2 = gs_IRCreateIrticket->c_crs_tour2;
+			reference3 = gs_IRCreateIrticket->c_reference3;
+			form3 = gs_IRCreateIrticket->c_form3;
+			ticket_no3 = gs_IRCreateIrticket->c_ticket_no3;
+			pic3 = gs_IRCreateIrticket->c_pic3;
+			orig_ticket_no3 = gs_IRCreateIrticket->c_orig_ticket_no3;
+			no_of_books3 = gs_IRCreateIrticket->c_no_of_books3;
+			saving_code3 = gs_IRCreateIrticket->c_saving_code3;
+			sel_access3 = gs_IRCreateIrticket->c_sel_access3;
+			crs_tour3 = gs_IRCreateIrticket->c_crs_tour3;
+
+			EXEC SQL EXEC
+			SP_IR__createIrticket
+:gs_IRCreateIrticket->c_session_id:gs_IRCreateIrticketInd->ind_session_id,
+:gs_IRCreateIrticket->c_cop_id:gs_IRCreateIrticketInd->ind_cop_id,
+:gs_IRCreateIrticket->c_action_code:gs_IRCreateIrticketInd->ind_action_code,
+:gs_IRCreateIrticket->c_source:gs_IRCreateIrticketInd->ind_source,
+:reason_code:gs_IRCreateIrticketInd->ind_reason_code,
+:gs_IRCreateIrticket->c_crs_id:gs_IRCreateIrticketInd->ind_crs_id,
+:gs_IRCreateIrticket->c_commission_type:gs_IRCreateIrticketInd->ind_commission_type,
+:gs_IRCreateIrticket->c_net_ticket_ind:gs_IRCreateIrticketInd->ind_net_ticket_ind,
+:gs_IRCreateIrticket->c_net_ticket_type:gs_IRCreateIrticketInd->ind_net_ticket_type,
+:gs_IRCreateIrticket->c_nett_fare_to_airline:gs_IRCreateIrticketInd->ind_nett_fare_to_airline,
+:gs_IRCreateIrticket->c_selling_price_to_shop:gs_IRCreateIrticketInd->ind_selling_price_to_shop,
+:gs_IRCreateIrticket->c_selling_price_to_client:gs_IRCreateIrticketInd->ind_selling_price_to_client,
+:gs_IRCreateIrticket->c_tour_oper_commission:gs_IRCreateIrticketInd->ind_tour_oper_commission,
+:ticket_centre_reference:gs_IRCreateIrticketInd->ind_ticket_centre_reference,
+:grid_reference:gs_IRCreateIrticketInd->ind_grid_reference,
+:shop_reference:gs_IRCreateIrticketInd->ind_shop_reference,
+:gs_IRCreateIrticket->c_publish_fare_tc_commission:gs_IRCreateIrticketInd->ind_publish_fare_tc_commission,
+:gs_IRCreateIrticket->c_publish_fare_agent_commission:gs_IRCreateIrticketInd->ind_publish_fare_agent_commission,
+:gs_IRCreateIrticket->c_pax_id1:gs_IRCreateIrticketInd->ind_pax_id1,
+:gs_IRCreateIrticket->c_line_number1:gs_IRCreateIrticketInd->ind_line_number1,
+:gs_IRCreateIrticket->c_cost_line1:gs_IRCreateIrticketInd->ind_cost_line1,
+:reference1:gs_IRCreateIrticketInd->ind_reference1,
+:gs_IRCreateIrticket->c_sup_id1:gs_IRCreateIrticketInd->ind_sup_id1,
+:gs_IRCreateIrticket->c_cur_id1:gs_IRCreateIrticketInd->ind_cur_id1,
+:form1:gs_IRCreateIrticketInd->ind_form1,
+:ticket_no1:gs_IRCreateIrticketInd->ind_ticket_no1,
+:pic1:gs_IRCreateIrticketInd->ind_pic1,
+:orig_ticket_no1:gs_IRCreateIrticketInd->ind_orig_ticket_no1,
+:gs_IRCreateIrticket->c_comm_rate1:gs_IRCreateIrticketInd->ind_comm_rate1,
+:gs_IRCreateIrticket->c_commission1:gs_IRCreateIrticketInd->ind_commission1,
+:no_of_books1:gs_IRCreateIrticketInd->ind_no_of_books1,
+:gs_IRCreateIrticket->c_exchange_code1:gs_IRCreateIrticketInd->ind_exchange_code1,
+:gs_IRCreateIrticket->c_penalty_ch_fee1:gs_IRCreateIrticketInd->ind_penalty_ch_fee1,
+:gs_IRCreateIrticket->c_comm_penalty1:gs_IRCreateIrticketInd->ind_comm_penalty1,
+:gs_IRCreateIrticket->c_base_cost1:gs_IRCreateIrticketInd->ind_base_cost1,
+:saving_code1:gs_IRCreateIrticketInd->ind_saving_code1,
+:gs_IRCreateIrticket->c_full_fare1:gs_IRCreateIrticketInd->ind_full_fare1,
+:gs_IRCreateIrticket->c_low_prac_fare1:gs_IRCreateIrticketInd->ind_low_prac_fare1,
+:gs_IRCreateIrticket->c_personal_crs1:gs_IRCreateIrticketInd->ind_personal_crs1,
+:gs_IRCreateIrticket->c_stp_home_city1:gs_IRCreateIrticketInd->ind_stp_home_city1,
+:gs_IRCreateIrticket->c_stp_host_city1:gs_IRCreateIrticketInd->ind_stp_host_city1,
+:sel_access1:gs_IRCreateIrticketInd->ind_sel_access1,
+:crs_tour1:gs_IRCreateIrticketInd->ind_crs_tour1,
+:gs_IRCreateIrticket->c_rebate1:gs_IRCreateIrticketInd->ind_rebate1,
+:gs_IRCreateIrticket->c_doc_type1:gs_IRCreateIrticketInd->ind_doc_type1,
+:gs_IRCreateIrticket->c_e_ticket1:gs_IRCreateIrticketInd->ind_e_ticket1,
+:gs_IRCreateIrticket->c_refund1:gs_IRCreateIrticketInd->ind_refund1,
+:gs_IRCreateIrticket->c_pax_id2:gs_IRCreateIrticketInd->ind_pax_id2,
+:gs_IRCreateIrticket->c_line_number2:gs_IRCreateIrticketInd->ind_line_number2,
+:gs_IRCreateIrticket->c_cost_line2:gs_IRCreateIrticketInd->ind_cost_line2,
+:reference2:gs_IRCreateIrticketInd->ind_reference2,
+:gs_IRCreateIrticket->c_sup_id2:gs_IRCreateIrticketInd->ind_sup_id2,
+:gs_IRCreateIrticket->c_cur_id2:gs_IRCreateIrticketInd->ind_cur_id2,
+:form2:gs_IRCreateIrticketInd->ind_form2,
+:ticket_no2:gs_IRCreateIrticketInd->ind_ticket_no2,
+:pic2:gs_IRCreateIrticketInd->ind_pic2,
+:orig_ticket_no2:gs_IRCreateIrticketInd->ind_orig_ticket_no2,
+:gs_IRCreateIrticket->c_comm_rate2:gs_IRCreateIrticketInd->ind_comm_rate2,
+:gs_IRCreateIrticket->c_commission2:gs_IRCreateIrticketInd->ind_commission2,
+:no_of_books2:gs_IRCreateIrticketInd->ind_no_of_books2,
+:gs_IRCreateIrticket->c_exchange_code2:gs_IRCreateIrticketInd->ind_exchange_code2,
+:gs_IRCreateIrticket->c_penalty_ch_fee2:gs_IRCreateIrticketInd->ind_penalty_ch_fee2,
+:gs_IRCreateIrticket->c_comm_penalty2:gs_IRCreateIrticketInd->ind_comm_penalty2,
+:gs_IRCreateIrticket->c_base_cost2:gs_IRCreateIrticketInd->ind_base_cost2,
+:saving_code2:gs_IRCreateIrticketInd->ind_saving_code2,
+:gs_IRCreateIrticket->c_full_fare2:gs_IRCreateIrticketInd->ind_full_fare2,
+:gs_IRCreateIrticket->c_low_prac_fare2:gs_IRCreateIrticketInd->ind_low_prac_fare2,
+:gs_IRCreateIrticket->c_personal_crs2:gs_IRCreateIrticketInd->ind_personal_crs2,
+:gs_IRCreateIrticket->c_stp_home_city2:gs_IRCreateIrticketInd->ind_stp_home_city2,
+:gs_IRCreateIrticket->c_stp_host_city2:gs_IRCreateIrticketInd->ind_stp_host_city2,
+:sel_access2:gs_IRCreateIrticketInd->ind_sel_access2,
+:crs_tour2:gs_IRCreateIrticketInd->ind_crs_tour2,
+:gs_IRCreateIrticket->c_rebate2:gs_IRCreateIrticketInd->ind_rebate2,
+:gs_IRCreateIrticket->c_doc_type2:gs_IRCreateIrticketInd->ind_doc_type2,
+:gs_IRCreateIrticket->c_e_ticket2:gs_IRCreateIrticketInd->ind_e_ticket2,
+:gs_IRCreateIrticket->c_refund2:gs_IRCreateIrticketInd->ind_refund2,
+:gs_IRCreateIrticket->c_pax_id3:gs_IRCreateIrticketInd->ind_pax_id3,
+:gs_IRCreateIrticket->c_line_number3:gs_IRCreateIrticketInd->ind_line_number3,
+:gs_IRCreateIrticket->c_cost_line3:gs_IRCreateIrticketInd->ind_cost_line3,
+:reference3:gs_IRCreateIrticketInd->ind_reference3,
+:gs_IRCreateIrticket->c_sup_id3:gs_IRCreateIrticketInd->ind_sup_id3,
+:gs_IRCreateIrticket->c_cur_id3:gs_IRCreateIrticketInd->ind_cur_id3,
+:form3:gs_IRCreateIrticketInd->ind_form3,
+:ticket_no3:gs_IRCreateIrticketInd->ind_ticket_no3,
+:pic3:gs_IRCreateIrticketInd->ind_pic3,
+:orig_ticket_no3:gs_IRCreateIrticketInd->ind_orig_ticket_no3,
+:gs_IRCreateIrticket->c_comm_rate3:gs_IRCreateIrticketInd->ind_comm_rate3,
+:gs_IRCreateIrticket->c_commission3:gs_IRCreateIrticketInd->ind_commission3,
+:no_of_books3:gs_IRCreateIrticketInd->ind_no_of_books3,
+:gs_IRCreateIrticket->c_exchange_code3:gs_IRCreateIrticketInd->ind_exchange_code3,
+:gs_IRCreateIrticket->c_penalty_ch_fee3:gs_IRCreateIrticketInd->ind_penalty_ch_fee3,
+:gs_IRCreateIrticket->c_comm_penalty3:gs_IRCreateIrticketInd->ind_comm_penalty3,
+:gs_IRCreateIrticket->c_base_cost3:gs_IRCreateIrticketInd->ind_base_cost3,
+:saving_code3:gs_IRCreateIrticketInd->ind_saving_code3,
+:gs_IRCreateIrticket->c_full_fare3:gs_IRCreateIrticketInd->ind_full_fare3,
+:gs_IRCreateIrticket->c_low_prac_fare3:gs_IRCreateIrticketInd->ind_low_prac_fare3,
+:gs_IRCreateIrticket->c_personal_crs3:gs_IRCreateIrticketInd->ind_personal_crs3,
+:gs_IRCreateIrticket->c_stp_home_city3:gs_IRCreateIrticketInd->ind_stp_home_city3,
+:gs_IRCreateIrticket->c_stp_host_city3:gs_IRCreateIrticketInd->ind_stp_host_city3,
+:sel_access3:gs_IRCreateIrticketInd->ind_sel_access3,
+:crs_tour3:gs_IRCreateIrticketInd->ind_crs_tour3,
+:gs_IRCreateIrticket->c_rebate3:gs_IRCreateIrticketInd->ind_rebate3,
+:gs_IRCreateIrticket->c_doc_type3:gs_IRCreateIrticketInd->ind_doc_type3,
+:gs_IRCreateIrticket->c_e_ticket3:gs_IRCreateIrticketInd->ind_e_ticket3,
+:gs_IRCreateIrticket->c_refund3:gs_IRCreateIrticketInd->ind_refund3,
+:gs_IRCreateIrticket->c_pi_sqlcode:gs_IRCreateIrticketInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrticket");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrticket function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrtripheader *gs_IRCreateIrtripheader;
+				SCIRCreateIrtripheaderInd *gs_IRCreateIrtripheaderInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrtripheader (SCIRCreateIrtripheader *ps_IRCreateIrtripheader,
+			SCIRCreateIrtripheaderInd *ps_IRCreateIrtripheaderInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *cfa_id;
+		char *pnr_time;
+		char *cfa_dpt;
+		char *reference;
+		char *booking_no;
+		char *employee_number;
+		char *booking_pcc;
+		char *booking_gds_agent;
+		char *ticketing_pcc;
+		char *ticketing_gds_agent;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrtripheader = ps_IRCreateIrtripheader;
+			gs_IRCreateIrtripheaderInd = ps_IRCreateIrtripheaderInd;
+
+			cfa_id = gs_IRCreateIrtripheader->c_cfa_id;
+			pnr_time = gs_IRCreateIrtripheader->c_pnr_time;
+			cfa_dpt = gs_IRCreateIrtripheader->c_cfa_dpt;
+			reference = gs_IRCreateIrtripheader->c_reference;
+			booking_no = gs_IRCreateIrtripheader->c_booking_no;
+			employee_number = gs_IRCreateIrtripheader->c_employee_number;
+			booking_pcc = gs_IRCreateIrtripheader->c_booking_pcc;
+			booking_gds_agent = gs_IRCreateIrtripheader->c_booking_gds_agent;
+			ticketing_pcc = gs_IRCreateIrtripheader->c_ticketing_pcc;
+			ticketing_gds_agent = gs_IRCreateIrtripheader->c_ticketing_gds_agent;
+
+			EXEC SQL EXEC
+			SP_IR__createIrtripheader
+:gs_IRCreateIrtripheader->c_session_id:gs_IRCreateIrtripheaderInd->ind_session_id,
+:gs_IRCreateIrtripheader->c_interface_type:gs_IRCreateIrtripheaderInd->ind_interface_type,
+:gs_IRCreateIrtripheader->c_creation_date:gs_IRCreateIrtripheaderInd->ind_creation_date,
+:gs_IRCreateIrtripheader->c_iata_no:gs_IRCreateIrtripheaderInd->ind_iata_no,
+:gs_IRCreateIrtripheader->c_cop_id:gs_IRCreateIrtripheaderInd->ind_cop_id,
+:gs_IRCreateIrtripheader->c_bra_id:gs_IRCreateIrtripheaderInd->ind_bra_id,
+:gs_IRCreateIrtripheader->c_crs_id:gs_IRCreateIrtripheaderInd->ind_crs_id,
+:gs_IRCreateIrtripheader->c_cfa_type:gs_IRCreateIrtripheaderInd->ind_cfa_type,
+:gs_IRCreateIrtripheader->c_cfa_code:gs_IRCreateIrtripheaderInd->ind_cfa_code,
+:cfa_id:gs_IRCreateIrtripheaderInd->ind_cfa_id,
+:gs_IRCreateIrtripheader->c_con_id:gs_IRCreateIrtripheaderInd->ind_con_id,
+:gs_IRCreateIrtripheader->c_iata_dest:gs_IRCreateIrtripheaderInd->ind_iata_dest,
+:gs_IRCreateIrtripheader->c_city_id:gs_IRCreateIrtripheaderInd->ind_city_id,
+:gs_IRCreateIrtripheader->c_pnr_date:gs_IRCreateIrtripheaderInd->ind_pnr_date,
+:pnr_time:gs_IRCreateIrtripheaderInd->ind_pnr_time,
+:gs_IRCreateIrtripheader->c_start_date:gs_IRCreateIrtripheaderInd->ind_start_date,
+:cfa_dpt:gs_IRCreateIrtripheaderInd->ind_cfa_dpt,
+:gs_IRCreateIrtripheader->c_mktg_list:gs_IRCreateIrtripheaderInd->ind_mktg_list,
+:reference:gs_IRCreateIrtripheaderInd->ind_reference,
+:booking_no:gs_IRCreateIrtripheaderInd->ind_booking_no,
+:gs_IRCreateIrtripheader->c_ticketer_user_id:gs_IRCreateIrtripheaderInd->ind_ticketer_user_id,
+:employee_number:gs_IRCreateIrtripheaderInd->ind_employee_number,
+:booking_pcc:gs_IRCreateIrtripheaderInd->ind_booking_pcc,
+:booking_gds_agent:gs_IRCreateIrtripheaderInd->ind_booking_gds_agent,
+:ticketing_pcc:gs_IRCreateIrtripheaderInd->ind_ticketing_pcc,
+:ticketing_gds_agent:gs_IRCreateIrtripheaderInd->ind_ticketing_gds_agent,
+:gs_IRCreateIrtripheader->c_record_creation_date:gs_IRCreateIrtripheaderInd->ind_record_creation_date,
+:gs_IRCreateIrtripheader->c_record_creation_time:gs_IRCreateIrtripheaderInd->ind_record_creation_time,
+:gs_IRCreateIrtripheader->c_pi_sqlcode:gs_IRCreateIrtripheaderInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrtripheader");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrtripheader function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRGetSupServiceType *gs_IRGetSupServiceType;
+				SCIRGetSupServiceTypeInd *gs_IRGetSupServiceTypeInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRGetSupServiceType (SCIRGetSupServiceType *ps_IRGetSupServiceType,
+			SCIRGetSupServiceTypeInd *ps_IRGetSupServiceTypeInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRGetSupServiceType = ps_IRGetSupServiceType;
+			gs_IRGetSupServiceTypeInd = ps_IRGetSupServiceTypeInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__getSupServiceType
+:gs_IRGetSupServiceType->c_pc_sup_id:gs_IRGetSupServiceTypeInd->ind_pc_sup_id,
+:gs_IRGetSupServiceType->c_pc_service_type:gs_IRGetSupServiceTypeInd->ind_pc_service_type OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__getSupServiceType");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__getSupServiceType function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrdistribution *gs_IRCreateIrdistribution;
+				SCIRCreateIrdistributionInd *gs_IRCreateIrdistributionInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrdistribution (SCIRCreateIrdistribution *ps_IRCreateIrdistribution,
+			SCIRCreateIrdistributionInd *ps_IRCreateIrdistributionInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrdistribution = ps_IRCreateIrdistribution;
+			gs_IRCreateIrdistributionInd = ps_IRCreateIrdistributionInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__createIrdistribution
+:gs_IRCreateIrdistribution->c_session_id:gs_IRCreateIrdistributionInd->ind_session_id,
+:gs_IRCreateIrdistribution->c_line_number_1:gs_IRCreateIrdistributionInd->ind_line_number_1,
+:gs_IRCreateIrdistribution->c_acc_id_1:gs_IRCreateIrdistributionInd->ind_acc_id_1,
+:gs_IRCreateIrdistribution->c_amt_1:gs_IRCreateIrdistributionInd->ind_amt_1,
+:gs_IRCreateIrdistribution->c_line_number_2:gs_IRCreateIrdistributionInd->ind_line_number_2,
+:gs_IRCreateIrdistribution->c_acc_id_2:gs_IRCreateIrdistributionInd->ind_acc_id_2,
+:gs_IRCreateIrdistribution->c_amt_2:gs_IRCreateIrdistributionInd->ind_amt_2,
+:gs_IRCreateIrdistribution->c_line_number_3:gs_IRCreateIrdistributionInd->ind_line_number_3,
+:gs_IRCreateIrdistribution->c_acc_id_3:gs_IRCreateIrdistributionInd->ind_acc_id_3,
+:gs_IRCreateIrdistribution->c_amt_3:gs_IRCreateIrdistributionInd->ind_amt_3,
+:gs_IRCreateIrdistribution->c_line_number_4:gs_IRCreateIrdistributionInd->ind_line_number_4,
+:gs_IRCreateIrdistribution->c_acc_id_4:gs_IRCreateIrdistributionInd->ind_acc_id_4,
+:gs_IRCreateIrdistribution->c_amt_4:gs_IRCreateIrdistributionInd->ind_amt_4,
+:gs_IRCreateIrdistribution->c_line_number_5:gs_IRCreateIrdistributionInd->ind_line_number_5,
+:gs_IRCreateIrdistribution->c_acc_id_5:gs_IRCreateIrdistributionInd->ind_acc_id_5,
+:gs_IRCreateIrdistribution->c_amt_5:gs_IRCreateIrdistributionInd->ind_amt_5,
+:gs_IRCreateIrdistribution->c_line_number_6:gs_IRCreateIrdistributionInd->ind_line_number_6,
+:gs_IRCreateIrdistribution->c_acc_id_6:gs_IRCreateIrdistributionInd->ind_acc_id_6,
+:gs_IRCreateIrdistribution->c_amt_6:gs_IRCreateIrdistributionInd->ind_amt_6,
+:gs_IRCreateIrdistribution->c_pi_sqlcode:gs_IRCreateIrdistributionInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrdistribution");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrdistribution function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRValidateSetFixed *gs_IRValidateSetFixed;
+				SCIRValidateSetFixedInd *gs_IRValidateSetFixedInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRValidateSetFixed (SCIRValidateSetFixed *ps_IRValidateSetFixed,
+			SCIRValidateSetFixedInd *ps_IRValidateSetFixedInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *pv_process_name;
+		char *pv_rejectirSub;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRValidateSetFixed = ps_IRValidateSetFixed;
+			gs_IRValidateSetFixedInd = ps_IRValidateSetFixedInd;
+
+			pv_process_name = gs_IRValidateSetFixed->c_pv_process_name;
+			pv_rejectirSub = gs_IRValidateSetFixed->c_pv_rejectirSub;
+
+			EXEC SQL EXEC
+			SP_IR__validateSetFixed
+:gs_IRValidateSetFixed->c_pc_session_id:gs_IRValidateSetFixedInd->ind_pc_session_id,
+:gs_IRValidateSetFixed->c_pc_iata:gs_IRValidateSetFixedInd->ind_pc_iata,
+:gs_IRValidateSetFixed->c_pc_company:gs_IRValidateSetFixedInd->ind_pc_company,
+:gs_IRValidateSetFixed->c_pc_branch:gs_IRValidateSetFixedInd->ind_pc_branch,
+:gs_IRValidateSetFixed->c_pc_consultant:gs_IRValidateSetFixedInd->ind_pc_consultant,
+:gs_IRValidateSetFixed->c_pc_mml_ind:gs_IRValidateSetFixedInd->ind_pc_mml_ind,
+:gs_IRValidateSetFixed->c_pc_cfa_type:gs_IRValidateSetFixedInd->ind_pc_cfa_type,
+:gs_IRValidateSetFixed->c_gmt_date_time:gs_IRValidateSetFixedInd->ind_gmt_date_time,
+:pv_process_name:gs_IRValidateSetFixedInd->ind_pv_process_name,
+:gs_IRValidateSetFixed->c_pc_braMktList:gs_IRValidateSetFixedInd->ind_pc_braMktList OUTPUT,
+:gs_IRValidateSetFixed->c_pc_tktBranch:gs_IRValidateSetFixedInd->ind_pc_tktBranch OUTPUT,
+:gs_IRValidateSetFixed->c_pc_city:gs_IRValidateSetFixedInd->ind_pc_city OUTPUT,
+:gs_IRValidateSetFixed->c_lcl_date_time:gs_IRValidateSetFixedInd->ind_lcl_date_time OUTPUT,
+:gs_IRValidateSetFixed->c_pc_rejectCon:gs_IRValidateSetFixedInd->ind_pc_rejectCon OUTPUT,
+:gs_IRValidateSetFixed->c_pc_rejectCop:gs_IRValidateSetFixedInd->ind_pc_rejectCop OUTPUT,
+:gs_IRValidateSetFixed->c_pc_rejectBra:gs_IRValidateSetFixedInd->ind_pc_rejectBra OUTPUT,
+:gs_IRValidateSetFixed->c_pi_rejectirId:gs_IRValidateSetFixedInd->ind_pi_rejectirId OUTPUT,
+:pv_rejectirSub:gs_IRValidateSetFixedInd->ind_pv_rejectirSub OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__validateSetFixed");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__validateSetFixed function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrreceipt *gs_IRCreateIrreceipt;
+				SCIRCreateIrreceiptInd *gs_IRCreateIrreceiptInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrreceipt (SCIRCreateIrreceipt *ps_IRCreateIrreceipt,
+			SCIRCreateIrreceiptInd *ps_IRCreateIrreceiptInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *name;
+		char *cc_no;
+		char *cc_auth_no;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrreceipt = ps_IRCreateIrreceipt;
+			gs_IRCreateIrreceiptInd = ps_IRCreateIrreceiptInd;
+
+			name = gs_IRCreateIrreceipt->c_name;
+			cc_no = gs_IRCreateIrreceipt->c_cc_no;
+			cc_auth_no = gs_IRCreateIrreceipt->c_cc_auth_no;
+
+			EXEC SQL EXEC
+			SP_IR__createIrreceipt
+:gs_IRCreateIrreceipt->c_session_id:gs_IRCreateIrreceiptInd->ind_session_id,
+:gs_IRCreateIrreceipt->c_line_number:gs_IRCreateIrreceiptInd->ind_line_number,
+:gs_IRCreateIrreceipt->c_cop_id:gs_IRCreateIrreceiptInd->ind_cop_id,
+:gs_IRCreateIrreceipt->c_bra_id:gs_IRCreateIrreceiptInd->ind_bra_id,
+:name:gs_IRCreateIrreceiptInd->ind_name,
+:gs_IRCreateIrreceipt->c_total_amt:gs_IRCreateIrreceiptInd->ind_total_amt,
+:gs_IRCreateIrreceipt->c_bank_id:gs_IRCreateIrreceiptInd->ind_bank_id,
+:gs_IRCreateIrreceipt->c_form_of_pay:gs_IRCreateIrreceiptInd->ind_form_of_pay,
+:gs_IRCreateIrreceipt->c_cc_id:gs_IRCreateIrreceiptInd->ind_cc_id,
+:cc_no:gs_IRCreateIrreceiptInd->ind_cc_no,
+:gs_IRCreateIrreceipt->c_cc_exp_date:gs_IRCreateIrreceiptInd->ind_cc_exp_date,
+:cc_auth_no:gs_IRCreateIrreceiptInd->ind_cc_auth_no,
+:gs_IRCreateIrreceipt->c_acc_id1:gs_IRCreateIrreceiptInd->ind_acc_id1,
+:gs_IRCreateIrreceipt->c_amt1:gs_IRCreateIrreceiptInd->ind_amt1,
+:gs_IRCreateIrreceipt->c_acc_id2:gs_IRCreateIrreceiptInd->ind_acc_id2,
+:gs_IRCreateIrreceipt->c_amt2:gs_IRCreateIrreceiptInd->ind_amt2,
+:gs_IRCreateIrreceipt->c_acc_id3:gs_IRCreateIrreceiptInd->ind_acc_id3,
+:gs_IRCreateIrreceipt->c_amt3:gs_IRCreateIrreceiptInd->ind_amt3,
+:gs_IRCreateIrreceipt->c_link_to:gs_IRCreateIrreceiptInd->ind_link_to,
+:gs_IRCreateIrreceipt->c_rec_valid:gs_IRCreateIrreceiptInd->ind_rec_valid OUTPUT,
+:gs_IRCreateIrreceipt->c_lang_id:gs_IRCreateIrreceiptInd->ind_lang_id OUTPUT,
+:gs_IRCreateIrreceipt->c_payment_reference:gs_IRCreateIrreceiptInd->ind_payment_reference,
+:gs_IRCreateIrreceipt->c_pi_sqlcode:gs_IRCreateIrreceiptInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrreceipt");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrreceipt function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRMoveQueue *gs_IRMoveQueue;
+				SCIRMoveQueueInd *gs_IRMoveQueueInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRMoveQueue (SCIRMoveQueue *ps_IRMoveQueue,
+			SCIRMoveQueueInd *ps_IRMoveQueueInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRMoveQueue = ps_IRMoveQueue;
+			gs_IRMoveQueueInd = ps_IRMoveQueueInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__moveQueue
+:gs_IRMoveQueue->c_pc_session_id:gs_IRMoveQueueInd->ind_pc_session_id,
+:gs_IRMoveQueue->c_pc_queue_type:gs_IRMoveQueueInd->ind_pc_queue_type,
+:gs_IRMoveQueue->c_pc_rejectCop:gs_IRMoveQueueInd->ind_pc_rejectCop,
+:gs_IRMoveQueue->c_pc_rejectBra:gs_IRMoveQueueInd->ind_pc_rejectBra,
+:gs_IRMoveQueue->c_pc_rejectCon:gs_IRMoveQueueInd->ind_pc_rejectCon,
+:gs_IRMoveQueue->c_pi_sqlcode:gs_IRMoveQueueInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__moveQueue");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__moveQueue function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIremailaddress *gs_IRCreateIremailaddress;
+				SCIRCreateIremailaddressInd *gs_IRCreateIremailaddressInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIremailaddress (SCIRCreateIremailaddress *ps_IRCreateIremailaddress,
+			SCIRCreateIremailaddressInd *ps_IRCreateIremailaddressInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *email_id1;
+		char *email_id2;
+		char *email_id3;
+		char *email_id4;
+		char *email_id5;
+		char *email_id6;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIremailaddress = ps_IRCreateIremailaddress;
+			gs_IRCreateIremailaddressInd = ps_IRCreateIremailaddressInd;
+
+			email_id1 = gs_IRCreateIremailaddress->c_email_id1;
+			email_id2 = gs_IRCreateIremailaddress->c_email_id2;
+			email_id3 = gs_IRCreateIremailaddress->c_email_id3;
+			email_id4 = gs_IRCreateIremailaddress->c_email_id4;
+			email_id5 = gs_IRCreateIremailaddress->c_email_id5;
+			email_id6 = gs_IRCreateIremailaddress->c_email_id6;
+
+			EXEC SQL EXEC
+			SP_IR__createIremailaddress
+:gs_IRCreateIremailaddress->c_session_id:gs_IRCreateIremailaddressInd->ind_session_id,
+:email_id1:gs_IRCreateIremailaddressInd->ind_email_id1,
+:gs_IRCreateIremailaddress->c_email_type1:gs_IRCreateIremailaddressInd->ind_email_type1,
+:email_id2:gs_IRCreateIremailaddressInd->ind_email_id2,
+:gs_IRCreateIremailaddress->c_email_type2:gs_IRCreateIremailaddressInd->ind_email_type2,
+:email_id3:gs_IRCreateIremailaddressInd->ind_email_id3,
+:gs_IRCreateIremailaddress->c_email_type3:gs_IRCreateIremailaddressInd->ind_email_type3,
+:email_id4:gs_IRCreateIremailaddressInd->ind_email_id4,
+:gs_IRCreateIremailaddress->c_email_type4:gs_IRCreateIremailaddressInd->ind_email_type4,
+:email_id5:gs_IRCreateIremailaddressInd->ind_email_id5,
+:gs_IRCreateIremailaddress->c_email_type5:gs_IRCreateIremailaddressInd->ind_email_type5,
+:email_id6:gs_IRCreateIremailaddressInd->ind_email_id6,
+:gs_IRCreateIremailaddress->c_email_type6:gs_IRCreateIremailaddressInd->ind_email_type6,
+:gs_IRCreateIremailaddress->c_pi_sqlcode:gs_IRCreateIremailaddressInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIremailaddress");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIremailaddress function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRIsPFSSupplier *gs_IRIsPFSSupplier;
+				SCIRIsPFSSupplierInd *gs_IRIsPFSSupplierInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRIsPFSSupplier (SCIRIsPFSSupplier *ps_IRIsPFSSupplier,
+			SCIRIsPFSSupplierInd *ps_IRIsPFSSupplierInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRIsPFSSupplier = ps_IRIsPFSSupplier;
+			gs_IRIsPFSSupplierInd = ps_IRIsPFSSupplierInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__isPFSSupplier
+:gs_IRIsPFSSupplier->c_cop_id:gs_IRIsPFSSupplierInd->ind_cop_id,
+:gs_IRIsPFSSupplier->c_sup_id:gs_IRIsPFSSupplierInd->ind_sup_id,
+:gs_IRIsPFSSupplier->c_pd_lcl_date:gs_IRIsPFSSupplierInd->ind_pd_lcl_date,
+:gs_IRIsPFSSupplier->c_pb_is_pfs:gs_IRIsPFSSupplierInd->ind_pb_is_pfs OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__isPFSSupplier");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__isPFSSupplier function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRGetCopIdByIata *gs_IRGetCopIdByIata;
+				SCIRGetCopIdByIataInd *gs_IRGetCopIdByIataInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRGetCopIdByIata (SCIRGetCopIdByIata *ps_IRGetCopIdByIata,
+			SCIRGetCopIdByIataInd *ps_IRGetCopIdByIataInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRGetCopIdByIata = ps_IRGetCopIdByIata;
+			gs_IRGetCopIdByIataInd = ps_IRGetCopIdByIataInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__getCopIdByIata
+:gs_IRGetCopIdByIata->c_pc_iata_no:gs_IRGetCopIdByIataInd->ind_pc_iata_no,
+:gs_IRGetCopIdByIata->c_pc_cop_id:gs_IRGetCopIdByIataInd->ind_pc_cop_id OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__getCopIdByIata");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__getCopIdByIata function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRUpdateIrRows *gs_IRUpdateIrRows;
+				SCIRUpdateIrRowsInd *gs_IRUpdateIrRowsInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRUpdateIrRows (SCIRUpdateIrRows *ps_IRUpdateIrRows,
+			SCIRUpdateIrRowsInd *ps_IRUpdateIrRowsInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRUpdateIrRows = ps_IRUpdateIrRows;
+			gs_IRUpdateIrRowsInd = ps_IRUpdateIrRowsInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__updateIrRows
+:gs_IRUpdateIrRows->c_pc_session_id:gs_IRUpdateIrRowsInd->ind_pc_session_id;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__updateIrRows");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__updateIrRows function*/
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRCreateIrstopovercity *gs_IRCreateIrstopovercity;
+				SCIRCreateIrstopovercityInd *gs_IRCreateIrstopovercityInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRCreateIrstopovercity (SCIRCreateIrstopovercity *ps_IRCreateIrstopovercity,
+			SCIRCreateIrstopovercityInd *ps_IRCreateIrstopovercityInd)
+{
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRCreateIrstopovercity = ps_IRCreateIrstopovercity;
+			gs_IRCreateIrstopovercityInd = ps_IRCreateIrstopovercityInd;
+
+
+			EXEC SQL EXEC
+			SP_IR__createIrstopovercity
+:gs_IRCreateIrstopovercity->c_session_id:gs_IRCreateIrstopovercityInd->ind_session_id,
+:gs_IRCreateIrstopovercity->c_itin_type1:gs_IRCreateIrstopovercityInd->ind_itin_type1,
+:gs_IRCreateIrstopovercity->c_line_number1:gs_IRCreateIrstopovercityInd->ind_line_number1,
+:gs_IRCreateIrstopovercity->c_order_number1:gs_IRCreateIrstopovercityInd->ind_order_number1,
+:gs_IRCreateIrstopovercity->c_city_id1:gs_IRCreateIrstopovercityInd->ind_city_id1,
+:gs_IRCreateIrstopovercity->c_itin_type2:gs_IRCreateIrstopovercityInd->ind_itin_type2,
+:gs_IRCreateIrstopovercity->c_line_number2:gs_IRCreateIrstopovercityInd->ind_line_number2,
+:gs_IRCreateIrstopovercity->c_order_number2:gs_IRCreateIrstopovercityInd->ind_order_number2,
+:gs_IRCreateIrstopovercity->c_city_id2:gs_IRCreateIrstopovercityInd->ind_city_id2,
+:gs_IRCreateIrstopovercity->c_itin_type3:gs_IRCreateIrstopovercityInd->ind_itin_type3,
+:gs_IRCreateIrstopovercity->c_line_number3:gs_IRCreateIrstopovercityInd->ind_line_number3,
+:gs_IRCreateIrstopovercity->c_order_number3:gs_IRCreateIrstopovercityInd->ind_order_number3,
+:gs_IRCreateIrstopovercity->c_city_id3:gs_IRCreateIrstopovercityInd->ind_city_id3,
+:gs_IRCreateIrstopovercity->c_itin_type4:gs_IRCreateIrstopovercityInd->ind_itin_type4,
+:gs_IRCreateIrstopovercity->c_line_number4:gs_IRCreateIrstopovercityInd->ind_line_number4,
+:gs_IRCreateIrstopovercity->c_order_number4:gs_IRCreateIrstopovercityInd->ind_order_number4,
+:gs_IRCreateIrstopovercity->c_city_id4:gs_IRCreateIrstopovercityInd->ind_city_id4,
+:gs_IRCreateIrstopovercity->c_itin_type5:gs_IRCreateIrstopovercityInd->ind_itin_type5,
+:gs_IRCreateIrstopovercity->c_line_number5:gs_IRCreateIrstopovercityInd->ind_line_number5,
+:gs_IRCreateIrstopovercity->c_order_number5:gs_IRCreateIrstopovercityInd->ind_order_number5,
+:gs_IRCreateIrstopovercity->c_city_id5:gs_IRCreateIrstopovercityInd->ind_city_id5,
+:gs_IRCreateIrstopovercity->c_itin_type6:gs_IRCreateIrstopovercityInd->ind_itin_type6,
+:gs_IRCreateIrstopovercity->c_line_number6:gs_IRCreateIrstopovercityInd->ind_line_number6,
+:gs_IRCreateIrstopovercity->c_order_number6:gs_IRCreateIrstopovercityInd->ind_order_number6,
+:gs_IRCreateIrstopovercity->c_city_id6:gs_IRCreateIrstopovercityInd->ind_city_id6,
+:gs_IRCreateIrstopovercity->c_pi_sqlcode:gs_IRCreateIrstopovercityInd->ind_pi_sqlcode OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__createIrstopovercity");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__createIrstopovercity function*/
+
+   /******* Declare Section *******/
+         EXEC SQL BEGIN DECLARE SECTION;
+            SCIRProcessVoidTicket *gs_IRProcessVoidTicket;
+            SCIRProcessVoidTicketInd *gs_IRProcessVoidTicketInd;
+         EXEC SQL END DECLARE SECTION;
+
+int
+dbIRProcessVoidTicket (SCIRProcessVoidTicket *ps_IRProcessVoidTicket,
+         SCIRProcessVoidTicketInd *ps_IRProcessVoidTicketInd)
+{
+         EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+         EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+         EXEC SQL WHENEVER SQLWARNING CONTINUE;
+      
+			gs_IRProcessVoidTicket	  = ps_IRProcessVoidTicket;
+			gs_IRProcessVoidTicketInd = ps_IRProcessVoidTicketInd;
+
+			EXEC SQL EXEC
+			SP_IR__processVoidTicket
+:gs_IRProcessVoidTicket->c_pc_form:gs_IRProcessVoidTicketInd->ind_pc_form,
+:gs_IRProcessVoidTicket->c_pc_ticket_no:gs_IRProcessVoidTicketInd->ind_pc_ticket_no,
+:gs_IRProcessVoidTicket->c_pc_reference:gs_IRProcessVoidTicketInd->ind_pc_reference,
+:gs_IRProcessVoidTicket->c_pi_sqlcode:gs_IRProcessVoidTicketInd->ind_pi_sqlcode OUTPUT;
+
+
+		return SQLCODE;
+
+sql_error:
+   setDbError(&sqlca, "invocation of Stored Procedure SP_IR__processVoidTicket");
+   if(SQLCODE < -20000 && SQLCODE > -30000)
+      return 0;
+   return SQLCODE;
+
+not_found:
+      return 0;
+} /* end of invocation of Stroed Procedure SP_IR__processVoidTicket function */
+
+
+int
+dbIR_ExecSqlStatement (char* inStmt)
+{
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				char* stmt = inStmt;
+				SCIRIsPFSSupplier *gs_IRIsPFSSupplier;
+				SCIRIsPFSSupplierInd *gs_IRIsPFSSupplierInd;
+			EXEC SQL END DECLARE SECTION;
+
+         EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+         EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+         EXEC SQL WHENEVER SQLWARNING CONTINUE;
+      
+			EXEC SQL EXECUTE IMMEDIATE :stmt;
+
+		return SQLCODE;
+
+sql_error:
+   setDbError(&sqlca, "invocation of Stored Procedure SP_IR__processVoidTicket");
+   if(SQLCODE < -20000 && SQLCODE > -30000)
+      return 0;
+   return SQLCODE;
+
+not_found:
+      return 0;
+} /* end of executing SQL statement */
+EXEC SQL INCLUDE SQLCA;
+
+	/******* Declare Section *******/
+			EXEC SQL BEGIN DECLARE SECTION;
+				SCIRValReasonCode *gs_IRValReasonCode;
+				SCIRValReasonCodeInd *gs_IRValReasonCodeInd;
+			EXEC SQL END DECLARE SECTION;
+
+int
+dbIRValReasonCode (SCIRValReasonCode *ps_IRValReasonCode,
+			SCIRValReasonCodeInd *ps_IRValReasonCodeInd)
+{
+	EXEC SQL BEGIN DECLARE SECTION;
+		char *reason_code;
+	EXEC SQL END DECLARE SECTION;
+
+			EXEC SQL WHENEVER SQLERROR GOTO sql_error;
+			EXEC SQL WHENEVER NOT FOUND GOTO not_found;
+			EXEC SQL WHENEVER SQLWARNING CONTINUE;
+
+			gs_IRValReasonCode = ps_IRValReasonCode;
+			gs_IRValReasonCodeInd = ps_IRValReasonCodeInd;
+
+			reason_code = gs_IRValReasonCode->c_reason_code;
+
+			EXEC SQL EXEC
+			SP_IR__valReasonCode
+:gs_IRValReasonCode->c_cop_id:gs_IRValReasonCodeInd->ind_cop_id,
+:reason_code:gs_IRValReasonCodeInd->ind_reason_code,
+:gs_IRValReasonCode->c_rc_valid:gs_IRValReasonCodeInd->ind_rc_valid OUTPUT;
+
+		return SQLCODE;
+
+sql_error:
+	setDbError(&sqlca, "invocation of Stored Procedure SP_IR__valReasonCode");
+	if(SQLCODE < -20000 && SQLCODE > -30000)
+		return 0;
+	return SQLCODE;
+
+not_found:
+		return 0;
+} /* end of invocation of Stored Procedure SP_IR__valReasonCode function*/
